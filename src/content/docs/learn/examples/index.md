@@ -1,28 +1,27 @@
 ---
 title: Examples
-description: Task-oriented Protos cookbook programs.
+description: Task-oriented executable Protos cookbook programs.
 ---
 
 # Examples
 
-The canonical examples are organized as a cookbook: find a task, then inspect a
-small executable program that demonstrates it.
+The canonical examples are a **task-oriented cookbook**: start with what you
+want to do, then inspect the smallest executable program that demonstrates it.
 
-Representative tasks in the current locked source include:
+Unlike the [Tutorials](/learn/tutorials/), this section is not a linear course.
+Its generated catalog follows the task mapping maintained by the exact Protos
+revision recorded in `protos-source.lock.json`.
 
-- print a value;
-- create and modify slots;
-- create an object and delegate behavior;
-- override delegated behavior and use `this`;
-- create closures, capture state, and pass behavior as a value;
-- express conditional control flow;
-- compute recursive Fibonacci and factorial;
-- use value-keyed and identity-keyed maps;
-- build and compare portable paths;
-- compose Futures;
-- spawn Actors, request replies, and observe FIFO behavior;
-- route requests through Actor Groups;
-- encode, mutate, and decode bytes.
+## Browse
 
-Examples are non-normative. They illustrate the language; the
-[language reference](/reference/language/) defines it.
+- [Task catalog](/learn/examples/catalog/) — every canonical cookbook task and
+  its executable `.protos` source.
+- [Tutorials](/learn/tutorials/) — use these instead when you want a progressive
+  learning path.
+- [Language reference](/reference/language/) — normative language authority.
+
+Each generated program page preserves the canonical source body and links back
+to the exact immutable Protos revision used to build this website.
+
+Examples are explanatory and non-normative. If an example conflicts with the
+applicable specification, the specification wins.

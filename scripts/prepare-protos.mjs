@@ -18,6 +18,10 @@ import {
   materializeProtosTutorials,
   protosTutorialsMatchSource,
 } from './materialize-protos-tutorials.mjs';
+import {
+  materializeProtosExamples,
+  protosExamplesMatchSource,
+} from './materialize-protos-examples.mjs';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const root = resolve(scriptDir, '..');
@@ -154,10 +158,16 @@ if (cacheMatches()) {
         `Generated Protos tutorials do not match locked revision ${lock.revision}`,
       );
     }
+    if (!protosExamplesMatchSource({ root, cache, lock })) {
+      throw new Error(
+        `Generated Protos examples do not match locked revision ${lock.revision}`,
+      );
+    }
     console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
     console.log(`PROTOS_BRANDING_READY: ${lock.revision}`);
     console.log(`PROTOS_GUIDE_READY: ${lock.revision}`);
     console.log(`PROTOS_TUTORIALS_READY: ${lock.revision}`);
+    console.log(`PROTOS_EXAMPLES_READY: ${lock.revision}`);
     console.log(`PROTOS_GRAMMAR_READY: ${lock.revision}`);
     process.exit(0);
   }
@@ -165,6 +175,7 @@ if (cacheMatches()) {
   materializeBranding();
   materializeProtosGuide({ root, cache, lock });
   materializeProtosTutorials({ root, cache, lock });
+  materializeProtosExamples({ root, cache, lock });
   console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
   process.exit(0);
 }
@@ -230,6 +241,7 @@ try {
   materializeBranding();
   materializeProtosGuide({ root, cache, lock });
   materializeProtosTutorials({ root, cache, lock });
+  materializeProtosExamples({ root, cache, lock });
   console.log(`PROTOS_SOURCE_FETCH: PASS revision=${actual}`);
 } catch (error) {
   rmSync(temporary, { recursive: true, force: true });

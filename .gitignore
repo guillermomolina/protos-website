@@ -23,6 +23,11 @@
 # The curated tutorials index stays tracked; generated groups do not.
 /src/content/docs/learn/tutorials/[0-9][0-9]-*/
 
+# Generated task catalog and executable example pages from exact-SHA source.
+# The curated examples index stays tracked.
+/src/content/docs/learn/examples/catalog/
+/src/content/docs/learn/examples/programs/
+
 # Local/editor noise
 .DS_Store
 npm-debug.log*
