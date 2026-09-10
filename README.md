@@ -117,5 +117,7 @@ mechanism can be changed later without changing website semantics.
 
 ## Project coordination
 
-Production image-delivery work is tracked in
-[WEB001-H / Protos #299](https://github.com/guillermomolina/protos/issues/299).
+Public website content work is tracked in
+[WEB001-J / Protos #301](https://github.com/guillermomolina/protos/issues/301).
+
+Private production integration is tracked separately in WEB001-I / Protos #300.

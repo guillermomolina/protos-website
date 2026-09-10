@@ -1,12 +1,18 @@
 ---
 title: Reference
-description: Exact and normative Protos language reference.
+description: Navigate the normative language specification and the current library surface.
 ---
 
 # Reference
 
-The Protos specification remains the normative source for observable language
-syntax and semantics.
+Reference material answers a different question from the learning material:
+**what behavior is defined, and where is that definition owned?**
 
-The website will render or index the specification from the exact locked Protos
-revision while preserving visible source provenance.
+- [Language reference](/reference/language/) — map the normative Core v0.1
+  specification and its ownership boundaries.
+- [Standard library](/reference/standard-library/) — navigate the library
+  families present in the source revision consumed by this website.
+
+The Protos repository remains the authority for observable syntax and semantics.
+This website curates and navigates that material from an exact locked source
+revision; it does not independently redefine the language.

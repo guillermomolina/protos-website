@@ -64,5 +64,6 @@ WEB001-B ratified, with its original hosting component superseded by WEB001-F:
   compatibility, or authority decision, stop that slice and return to the Protos
   WEBxxx governance/approval process.
 
-Canonical live coordination for production-image delivery is Protos Issue #299
-(`WEB001-H`), under WEB001 / #278.
+Canonical live coordination for public website content is Protos Issue #301
+(`WEB001-J`), under WEB001 / #278. Private production integration remains
+tracked separately in WEB001-I / #300.
