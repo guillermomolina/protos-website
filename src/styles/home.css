@@ -69,21 +69,10 @@ a {
   text-decoration: none;
 }
 
-.brand-crop {
-  position: relative;
+.brand-logo {
   display: block;
   width: 185px;
-  height: 52px;
-  overflow: hidden;
-}
-
-.brand-crop img {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 100%;
   height: auto;
-  transform: translateY(-50%);
 }
 
 .primary-nav {
@@ -480,9 +469,8 @@ footer {
     min-height: 68px;
   }
 
-  .brand-crop {
+  .brand-logo {
     width: 150px;
-    height: 46px;
   }
 
   .primary-nav a:not(.github-link) {

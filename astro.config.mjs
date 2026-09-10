@@ -8,6 +8,7 @@ export default defineConfig({
       title: 'Protos',
       description:
         'Protos is an experimental prototype-based programming language designed from first principles.',
+      favicon: '/protos-branding/protos-symbol.png',
       social: [
         {
           icon: 'github',

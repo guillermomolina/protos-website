@@ -1,5 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import {
+  copyFileSync,
   existsSync,
   mkdirSync,
   readFileSync,
@@ -31,6 +32,9 @@ const cache = configuredCache
   : join(root, '.protos-source');
 const marker = join(cache, '.protos-revision');
 const checkOnly = process.argv.includes('--check');
+const brandingSourceDirectory = join(cache, 'docs/assets/branding');
+const brandingOutputDirectory = join(root, 'public/protos-branding');
+const brandingFiles = ['protos-logo.png', 'protos-symbol.png'];
 
 function run(args, options = {}) {
   return execFileSync(args[0], args.slice(1), {
@@ -50,7 +54,62 @@ function cacheMatches() {
   return true;
 }
 
+function brandingMatchesSource() {
+  for (const name of brandingFiles) {
+    const source = join(brandingSourceDirectory, name);
+    const output = join(brandingOutputDirectory, name);
+    if (!existsSync(source) || !existsSync(output)) return false;
+    if (!readFileSync(source).equals(readFileSync(output))) return false;
+  }
+  return true;
+}
+
+function materializeBranding() {
+  for (const name of brandingFiles) {
+    if (!existsSync(join(brandingSourceDirectory, name))) {
+      throw new Error(`Canonical Protos branding asset missing: ${name}`);
+    }
+  }
+
+  if (brandingMatchesSource()) {
+    console.log(`PROTOS_BRANDING_READY: ${lock.revision}`);
+    return;
+  }
+
+  const temporaryBranding = `${brandingOutputDirectory}.tmp-${process.pid}`;
+  rmSync(temporaryBranding, { recursive: true, force: true });
+  mkdirSync(temporaryBranding, { recursive: true });
+
+  try {
+    for (const name of brandingFiles) {
+      copyFileSync(
+        join(brandingSourceDirectory, name),
+        join(temporaryBranding, name),
+      );
+    }
+    rmSync(brandingOutputDirectory, { recursive: true, force: true });
+    mkdirSync(dirname(brandingOutputDirectory), { recursive: true });
+    renameSync(temporaryBranding, brandingOutputDirectory);
+    console.log(`PROTOS_BRANDING_MATERIALIZED: ${lock.revision}`);
+  } catch (error) {
+    rmSync(temporaryBranding, { recursive: true, force: true });
+    throw error;
+  }
+}
+
 if (cacheMatches()) {
+  if (checkOnly) {
+    if (!brandingMatchesSource()) {
+      throw new Error(
+        `Generated Protos branding does not match locked revision ${lock.revision}`,
+      );
+    }
+    console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
+    console.log(`PROTOS_BRANDING_READY: ${lock.revision}`);
+    process.exit(0);
+  }
+
+  materializeBranding();
   console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
   process.exit(0);
 }
@@ -88,6 +147,7 @@ try {
     'set',
     'docs/guide',
     'docs/design',
+    'docs/assets/branding',
     'spec',
     'protos/tutorials',
     'protos/examples',
@@ -110,6 +170,7 @@ try {
 
   writeFileSync(join(temporary, '.protos-revision'), `${actual}\n`, 'utf8');
   renameSync(temporary, cache);
+  materializeBranding();
   console.log(`PROTOS_SOURCE_FETCH: PASS revision=${actual}`);
 } catch (error) {
   rmSync(temporary, { recursive: true, force: true });

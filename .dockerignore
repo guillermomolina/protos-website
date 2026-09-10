@@ -5,4 +5,5 @@ node_modules
 dist
 .protos-source
 .protos-source.*
+public/protos-branding
 npm-debug.log*

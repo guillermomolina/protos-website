@@ -11,6 +11,9 @@
 /.protos-source
 /.protos-source.*
 
+# Generated branding copied from the exact-SHA Protos source.
+/public/protos-branding
+
 # Local/editor noise
 .DS_Store
 npm-debug.log*
