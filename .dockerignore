@@ -1,0 +1,8 @@
+.git
+tmp
+node_modules
+.astro
+dist
+.protos-source
+.protos-source.*
+npm-debug.log*

@@ -1,0 +1,15 @@
+services:
+  site:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "4321:4321"
+    volumes:
+      - .:/workspace
+      - protos_node_modules:/workspace/node_modules
+    environment:
+      PROTOS_SOURCE_CACHE: /tmp/protos-source
+
+volumes:
+  protos_node_modules:

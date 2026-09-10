@@ -1,0 +1,16 @@
+# Repository-local scratch path. `/tmp` intentionally also matches a symlink.
+# Do not change this to `/tmp/`: the checkout may contain `tmp` as a symlink.
+/tmp
+
+# Node / Astro
+/node_modules
+/.astro
+/dist
+
+# Exact-SHA Protos materialization. Build input only; never canonical content.
+/.protos-source
+/.protos-source.*
+
+# Local/editor noise
+.DS_Store
+npm-debug.log*

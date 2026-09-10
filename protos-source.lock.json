@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/guillermomolina/protos.git",
+  "revision": "9f33e1b0e29d0439daebe278c8897f209ad4ce9e",
+  "canonicalPaths": [
+    "README.md",
+    "docs/guide",
+    "docs/design",
+    "spec",
+    "protos/tutorials",
+    "protos/examples"
+  ]
+}
