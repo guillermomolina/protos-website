@@ -10,6 +10,10 @@ import {
 } from 'node:fs';
 import { dirname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  materializeProtosGuide,
+  protosGuideMatchesSource,
+} from './materialize-protos-guide.mjs';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const root = resolve(scriptDir, '..');
@@ -104,12 +108,19 @@ if (cacheMatches()) {
         `Generated Protos branding does not match locked revision ${lock.revision}`,
       );
     }
+    if (!protosGuideMatchesSource({ root, cache, lock })) {
+      throw new Error(
+        `Generated Protos guide does not match locked revision ${lock.revision}`,
+      );
+    }
     console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
     console.log(`PROTOS_BRANDING_READY: ${lock.revision}`);
+    console.log(`PROTOS_GUIDE_READY: ${lock.revision}`);
     process.exit(0);
   }
 
   materializeBranding();
+  materializeProtosGuide({ root, cache, lock });
   console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
   process.exit(0);
 }
@@ -171,6 +182,7 @@ try {
   writeFileSync(join(temporary, '.protos-revision'), `${actual}\n`, 'utf8');
   renameSync(temporary, cache);
   materializeBranding();
+  materializeProtosGuide({ root, cache, lock });
   console.log(`PROTOS_SOURCE_FETCH: PASS revision=${actual}`);
 } catch (error) {
   rmSync(temporary, { recursive: true, force: true });

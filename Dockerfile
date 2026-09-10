@@ -16,6 +16,7 @@ FROM base AS build
 RUN npm run build
 
 FROM base AS dev
+USER node
 EXPOSE 4321
 CMD ["npm", "run", "dev"]
 

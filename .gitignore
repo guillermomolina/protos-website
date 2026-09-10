@@ -14,6 +14,11 @@
 # Generated branding copied from the exact-SHA Protos source.
 /public/protos-branding
 
+# Generated Programming Guide pages rendered from the exact-SHA Protos source.
+# The curated guide index stays tracked; canonical chapter/style copies do not.
+/src/content/docs/learn/guide/[0-9][0-9]-*.md
+/src/content/docs/learn/guide/source-style.md
+
 # Local/editor noise
 .DS_Store
 npm-debug.log*
