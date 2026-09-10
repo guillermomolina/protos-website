@@ -28,6 +28,15 @@
 /src/content/docs/learn/examples/catalog/
 /src/content/docs/learn/examples/programs/
 
+# Generated language/specification reference from exact-SHA canonical sources.
+# The curated language index stays tracked.
+/src/content/docs/reference/language/specification/
+/src/content/docs/reference/language/grammar/
+/src/content/docs/reference/language/semantics/
+/src/content/docs/reference/language/concurrency/
+/src/content/docs/reference/language/io/
+/src/content/docs/reference/language/runtime/
+
 # Local/editor noise
 .DS_Store
 npm-debug.log*

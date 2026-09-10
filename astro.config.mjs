@@ -28,6 +28,66 @@ const protosShikiGrammar = {
   aliases: ['Protos'],
 };
 
+// Presentation-only EBNF highlighting for the canonical specification.
+// This is not a Protos grammar and does not define which EBNF dialect the
+// specification accepts; it only prevents `ebnf` Markdown fences from being
+// rendered as an unsupported language.
+const ebnfShikiGrammar = {
+  name: 'ebnf',
+  scopeName: 'source.ebnf',
+  aliases: ['EBNF'],
+  patterns: [
+    { include: '#comments' },
+    {
+      name: 'string.quoted.double.ebnf',
+      begin: '"',
+      end: '"',
+      patterns: [
+        { name: 'constant.character.escape.ebnf', match: '\\\\.' },
+      ],
+    },
+    {
+      name: 'string.quoted.single.ebnf',
+      begin: "'",
+      end: "'",
+      patterns: [
+        { name: 'constant.character.escape.ebnf', match: '\\\\.' },
+      ],
+    },
+    {
+      name: 'keyword.operator.ebnf',
+      match: '::=|:=|=|\\\\|',
+    },
+    {
+      name: 'punctuation.definition.ebnf',
+      match: '[{}\\\\[\\\\](),;]',
+    },
+    {
+      name: 'constant.numeric.ebnf',
+      match: '\\\\b[0-9]+\\\\b',
+    },
+    {
+      name: 'variable.other.ebnf',
+      match: '[A-Za-z_][A-Za-z0-9_-]*',
+    },
+  ],
+  repository: {
+    comments: {
+      patterns: [
+        {
+          name: 'comment.block.ebnf',
+          begin: '\\\\(\\\\*',
+          end: '\\\\*\\\\)',
+        },
+        {
+          name: 'comment.line.double-slash.ebnf',
+          match: '//.*$',
+        },
+      ],
+    },
+  },
+};
+
 export default defineConfig({
   site: 'https://protos.guillermolina.com',
   integrations: [
@@ -35,7 +95,7 @@ export default defineConfig({
       title: 'Protos',
       expressiveCode: {
         shiki: {
-          langs: [protosShikiGrammar],
+          langs: [protosShikiGrammar, ebnfShikiGrammar],
         },
       },
       description:

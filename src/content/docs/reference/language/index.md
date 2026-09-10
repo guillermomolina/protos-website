@@ -1,42 +1,59 @@
 ---
 title: Language reference
-description: Ownership map for the normative Protos Core v0.1 specification.
+description: Canonical Protos Core v0.1 grammar and modular language specification.
 ---
 
 # Language reference
 
-The normative Core v0.1 specification is modular rather than a single monolithic
-document.
+This section renders the canonical Protos language specification from the
+**exact immutable Protos revision** consumed by this website.
 
-At a high level:
+The website does not become a second specification authority. Each generated
+page identifies its canonical source and revision, and the source document's
+own normative, informative, draft, or compatibility status continues to apply.
 
-- **Grammar** owns lexical rules, syntax, and mandatory lowering.
-- **Language overview** is the compatibility and navigation surface.
-- **Semantic specifications** own observable object, slot, invocation, control,
-  value, module, and related behavior.
-- **Concurrency specifications** own Futures, structured tasks, isolated
-  execution, Actors, and related concurrency semantics.
-- **I/O specifications** own process, stream, filesystem, and authority
-  semantics.
-- The abstract runtime is informative: it explains an execution model but does
-  not independently define observable behavior.
+## Entry points
 
-That ownership distinction matters. A convenient guide, example, runtime
-implementation detail, or website explanation cannot override the normative
-owner.
+- [Core Language Specification v0.1](/reference/language/specification/) —
+  compatibility/navigation surface for Core v0.1.
+- [Grammar](/reference/language/grammar/) — lexical rules, syntax, and mandatory
+  lowering.
 
-## Core ideas
+## Semantic specifications
 
-The current Protos model is built around a small semantic universe:
+- [Object model](/reference/language/semantics/object-model/)
+- [Callables](/reference/language/semantics/callables/)
+- [Execution and control](/reference/language/semantics/execution-and-control/)
+- [Values and collections](/reference/language/semantics/values-and-collections/)
+- [Modules](/reference/language/semantics/modules/)
+- [Errors](/reference/language/semantics/errors/)
 
-- everything is an object;
-- objects delegate directly to other objects rather than belonging to classes;
-- slots are the common storage mechanism;
-- slot creation (`:`) and modification (`=`) are distinct operations;
-- execution contexts represent lexical state;
-- closures are the single executable value;
-- reads may delegate, while writes do not silently mutate an ancestor;
-- concurrency extends the same object/message/closure model rather than
-  replacing it with a parallel type system.
+## Concurrency
 
-For an introduction, start with [Getting started](/learn/getting-started/).
+- [Futures and tasks](/reference/language/concurrency/futures-and-tasks/)
+- [Parallel execution](/reference/language/concurrency/parallel-execution/)
+- [Actors](/reference/language/concurrency/actors/)
+- [Distributed runtime](/reference/language/concurrency/distributed-runtime/)
+
+## I/O and authority
+
+- [I/O core](/reference/language/io/io-core/)
+- [Process I/O](/reference/language/io/process-io/)
+- [Byte I/O](/reference/language/io/byte-io/)
+- [Text I/O](/reference/language/io/text-io/)
+- [Filesystem](/reference/language/io/filesystem/)
+- [Network](/reference/language/io/network/)
+
+## Runtime model
+
+- [Abstract runtime](/reference/language/runtime/abstract-runtime/) — informative
+  execution model; it does not independently redefine observable language
+  behavior.
+
+The canonical specification changelog remains available in the source
+repository as historical material; it is intentionally not rendered as a
+primary reference page. Contributor/agent instructions under `spec/AGENTS.md`
+are likewise not language-reference content.
+
+For a progressive explanation instead of normative reference material, use the
+[Programming Guide](/learn/guide/).
