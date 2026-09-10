@@ -26,6 +26,10 @@ import {
   materializeProtosSpecReference,
   protosSpecReferenceMatchesSource,
 } from './materialize-protos-spec.mjs';
+import {
+  materializeProtosLibrarySource,
+  protosLibrarySourceMatches,
+} from './materialize-protos-library-source.mjs';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const root = resolve(scriptDir, '..');
@@ -172,12 +176,18 @@ if (cacheMatches()) {
         `Generated Protos language reference does not match locked revision ${lock.revision}`,
       );
     }
+    if (!protosLibrarySourceMatches({ root, cache, lock })) {
+      throw new Error(
+        `Generated Protos library source browser does not match locked revision ${lock.revision}`,
+      );
+    }
     console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
     console.log(`PROTOS_BRANDING_READY: ${lock.revision}`);
     console.log(`PROTOS_GUIDE_READY: ${lock.revision}`);
     console.log(`PROTOS_TUTORIALS_READY: ${lock.revision}`);
     console.log(`PROTOS_EXAMPLES_READY: ${lock.revision}`);
     console.log(`PROTOS_SPEC_REFERENCE_READY: ${lock.revision}`);
+    console.log(`PROTOS_LIBRARY_SOURCE_READY: ${lock.revision}`);
     console.log(`PROTOS_GRAMMAR_READY: ${lock.revision}`);
     process.exit(0);
   }
@@ -187,6 +197,7 @@ if (cacheMatches()) {
   materializeProtosTutorials({ root, cache, lock });
   materializeProtosExamples({ root, cache, lock });
   materializeProtosSpecReference({ root, cache, lock });
+  materializeProtosLibrarySource({ root, cache, lock });
   console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
   process.exit(0);
 }
@@ -228,6 +239,7 @@ try {
     'spec',
     'protos/tutorials',
     'protos/examples',
+    'protos/lib',
     'editors/vscode/syntaxes',
   ]);
   run(['git', '-C', temporary, 'checkout', '--detach', 'FETCH_HEAD']);
@@ -254,6 +266,7 @@ try {
   materializeProtosTutorials({ root, cache, lock });
   materializeProtosExamples({ root, cache, lock });
   materializeProtosSpecReference({ root, cache, lock });
+  materializeProtosLibrarySource({ root, cache, lock });
   console.log(`PROTOS_SOURCE_FETCH: PASS revision=${actual}`);
 } catch (error) {
   rmSync(temporary, { recursive: true, force: true });

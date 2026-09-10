@@ -37,6 +37,10 @@
 /src/content/docs/reference/language/io/
 /src/content/docs/reference/language/runtime/
 
+# Generated exact-SHA standard-library source browser.
+# The curated standard-library index stays tracked.
+/src/content/docs/reference/standard-library/source/
+
 # Local/editor noise
 .DS_Store
 npm-debug.log*

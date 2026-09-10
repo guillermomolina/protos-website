@@ -10,6 +10,7 @@
     "spec",
     "protos/tutorials",
     "protos/examples",
-    "editors/vscode/syntaxes/protos.tmLanguage.json"
+    "editors/vscode/syntaxes/protos.tmLanguage.json",
+    "protos/lib"
   ]
 }
