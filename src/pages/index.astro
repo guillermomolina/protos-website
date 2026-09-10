@@ -2,7 +2,6 @@
 import '../styles/home.css';
 
 const brandLogo = '/protos-branding/protos-logo.png';
-const brandSymbol = '/protos-branding/protos-symbol.png';
 
 const navigation = [
   { label: 'Learn', href: '/learn/' },
@@ -50,7 +49,11 @@ const canonicalRepository = 'https://github.com/guillermomolina/protos';
       content="Protos is an experimental prototype-based programming language built from a small set of composable mechanisms."
     />
     <meta name="theme-color" content="#f7fafc" />
-    <link rel="icon" type="image/png" href={brandSymbol} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <title>Protos — Experimental prototype-based programming language</title>
   </head>
   <body>
