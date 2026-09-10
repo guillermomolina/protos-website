@@ -89,7 +89,7 @@ const ebnfShikiGrammar = {
 };
 
 export default defineConfig({
-  site: 'https://protos.guillermolina.com',
+  site: 'https://protos.guillermomolina.com',
   integrations: [
     starlight({
       title: 'Protos',

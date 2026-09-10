@@ -3,7 +3,7 @@
 Official website implementation for the
 [Protos programming language](https://github.com/guillermomolina/protos).
 
-The intended public domain is `https://protos.guillermolina.com`.
+The intended public domain is `https://protos.guillermomolina.com`.
 
 ## Architecture
 
