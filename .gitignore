@@ -19,6 +19,10 @@
 /src/content/docs/learn/guide/[0-9][0-9]-*.md
 /src/content/docs/learn/guide/source-style.md
 
+# Generated tutorial group pages rendered from exact-SHA executable sources.
+# The curated tutorials index stays tracked; generated groups do not.
+/src/content/docs/learn/tutorials/[0-9][0-9]-*/
+
 # Local/editor noise
 .DS_Store
 npm-debug.log*
