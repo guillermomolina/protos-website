@@ -59,6 +59,8 @@ builds never silently follow moving `protos/main`.
 
 ## Production build
 
+The native static build remains:
+
 ```sh
 npm ci
 npm run build
@@ -66,15 +68,30 @@ npm run build
 
 Static output is written to `dist/`.
 
+The production container uses a separate final serving stage:
+
+```sh
+docker build --target production -t protos-website:local .
+docker run --rm -p 127.0.0.1:8080:8080 protos-website:local
+```
+
+Then open `http://localhost:8080`.
+
+The final image is NGINX Unprivileged on internal HTTP port 8080. Node, npm, Git,
+the website source tree, and build dependencies remain in earlier build stages;
+only generated static output is copied into the serving image.
+
 ## Deployment
 
-The GitHub Pages workflow is initially manual (`workflow_dispatch`) so creating
-the bootstrap commit does not attempt a production deployment before Pages and
-DNS are configured.
+The public repository deliberately contains no environment-specific production
+routing, TLS, network names, host paths, credentials, or orchestration
+configuration. Those are private deployment concerns.
 
-The workflow uses immutable full-SHA pins for its GitHub Actions.
+GitHub Pages was superseded by WEB001-F and is not retained as a standby
+production path. The website remains ordinary static output, so the hosting
+mechanism can be changed later without changing website semantics.
 
 ## Project coordination
 
-Website bootstrap work is tracked in
-[WEB001-C / Protos #285](https://github.com/guillermomolina/protos/issues/285).
+Production static-serving-image work is tracked in
+[WEB001-G / Protos #297](https://github.com/guillermomolina/protos/issues/297).

@@ -19,14 +19,21 @@ semantics or maintained canonical language documentation.
 
 ## Architecture
 
-WEB001-B ratified:
+WEB001-B ratified, with its original hosting component superseded by WEB001-F:
 
 - independent companion repository;
 - exact-SHA read-only Protos source consumption;
 - native Node and Docker Compose local execution through the same contracts;
 - Astro + Starlight;
 - static output;
-- GitHub Pages as the initial host for `protos.guillermolina.com`;
+- one self-hosted production path using an immutable static-serving image behind
+  a private reverse proxy;
+- NGINX Unprivileged as the WEB001-G production static-serving runtime, using an
+  Alpine slim image pinned by exact version and immutable digest;
+- the public repository owns only portable build/serving behavior; routing, TLS,
+  network names, host paths, credentials, and production orchestration remain
+  private deployment concerns;
+- GitHub Pages is superseded and is not retained as a standby production path;
 - no write authority from the website to `guillermomolina/protos`;
 - any future code-executing playground is a separate security/deployment
   boundary.
@@ -45,4 +52,5 @@ WEB001-B ratified:
   compatibility, or authority decision, stop that slice and return to the Protos
   WEBxxx governance/approval process.
 
-Canonical live coordination for the bootstrap is Protos Issue #285 (`WEB001-C`).
+Canonical live coordination for the production static-serving image is Protos
+Issue #297 (`WEB001-G`), under WEB001 / #278.
