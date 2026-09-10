@@ -1,0 +1,194 @@
+---
+import '../styles/home.css';
+
+const navigation = [
+  { label: 'Learn', href: '/learn/' },
+  { label: 'Reference', href: '/reference/' },
+  { label: 'Design', href: '/design/' },
+  { label: 'Community', href: '/community/' },
+];
+
+const principles = [
+  {
+    title: 'One object-and-slot model',
+    body:
+      'Ordinary object state, module bindings, and lexical bindings all use slots instead of unrelated storage concepts.',
+  },
+  {
+    title: 'Creation is not modification',
+    body:
+      'The language keeps intent explicit: : creates a slot, while = modifies an existing eligible slot.',
+  },
+  {
+    title: 'Closures are the executable value',
+    body:
+      'Methods are an invocation role of closures, not a second callable value category.',
+  },
+  {
+    title: 'Scale by composition',
+    body:
+      'Futures, structured tasks, isolated parallel execution, and Actors extend the same object/message/closure universe.',
+  },
+];
+
+const canonicalRepository = 'https://github.com/guillermomolina/protos';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta
+      name="description"
+      content="Protos is an experimental prototype-based programming language built from a small set of composable mechanisms."
+    />
+    <meta name="theme-color" content="#f7fafc" />
+    <title>Protos — Experimental prototype-based programming language</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="/" aria-label="Protos home">
+          <span class="brand-crop" aria-hidden="true">
+            <img src="/protos-logo.png" alt="" />
+          </span>
+        </a>
+
+        <nav class="primary-nav" aria-label="Primary navigation">
+          {
+            navigation.map((item) => (
+              <a href={item.href}>{item.label}</a>
+            ))
+          }
+          <a
+            class="github-link"
+            href={canonicalRepository}
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Experimental prototype-based programming language</p>
+            <h1>A small set of composable mechanisms.</h1>
+            <p class="hero-lede">
+              Protos is built around objects, slots, delegation, messages,
+              execution contexts, closures, Futures, and Actors. There are no
+              classes: objects delegate directly to other objects.
+            </p>
+
+            <div class="maturity" aria-label="Project maturity">
+              <span>Core language: v0.1 draft</span>
+              <span>Reference implementation: active development</span>
+            </div>
+
+            <div class="hero-actions">
+              <a class="button primary" href="/learn/">Learn Protos</a>
+              <a class="button secondary" href="/reference/">Read the reference</a>
+              <a class="text-action" href={canonicalRepository}>View on GitHub →</a>
+            </div>
+          </div>
+
+          <div class="code-panel" aria-label="Protos delegation example">
+            <div class="code-panel-header">
+              <span>Objects delegate directly</span>
+              <span class="code-source">first look</span>
+            </div>
+            <pre><code><span class="syntax-name">animal</span>: &#123;
+    <span class="syntax-name">alive</span>: <span class="syntax-value">true</span>
+
+    <span class="syntax-name">speak</span>: () =&gt; &#123;
+        <span class="syntax-call">print</span>(name)
+    &#125;
+&#125;
+
+<span class="syntax-name">dog</span>: animal &#123;
+    <span class="syntax-name">name</span>: <span class="syntax-string">"Rex"</span>
+&#125;
+
+dog.<span class="syntax-call">speak</span>()</code></pre>
+            <p class="code-caption">
+              <code>dog</code> delegates to <code>animal</code>. The inherited
+              closure runs with <code>dog</code> as its receiver.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="thesis" aria-labelledby="why-protos">
+        <div class="shell">
+          <div class="section-heading">
+            <p class="eyebrow">Why Protos?</p>
+            <h2 id="why-protos">Fewer independent semantic rules.</h2>
+            <p>
+              The design aims to grow through composition rather than by adding
+              a new language institution for every new capability.
+            </p>
+          </div>
+
+          <div class="principle-grid">
+            {
+              principles.map((principle) => (
+                <article class="principle">
+                  <h3>{principle.title}</h3>
+                  <p>{principle.body}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="model" aria-labelledby="model-title">
+        <div class="shell model-grid">
+          <div>
+            <p class="eyebrow">One universe</p>
+            <h2 id="model-title">Objects, slots, delegation, contexts.</h2>
+          </div>
+          <div class="model-copy">
+            <p>
+              Protos deliberately separates lexical lookup from receiver
+              delegation while reusing the same slot mechanism. Reads may
+              delegate; writes do not silently mutate an ancestor prototype.
+            </p>
+            <a href="/design/">Explore the design philosophy →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="next">
+        <div class="shell next-inner">
+          <div>
+            <p class="eyebrow">Start here</p>
+            <h2>Read, run, then go deeper.</h2>
+          </div>
+          <div class="next-actions">
+            <a href="/learn/">Learn</a>
+            <a href="/reference/">Reference</a>
+            <a href="/community/">Community</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="shell footer-inner">
+        <p>
+          Protos is experimental. The canonical specification and project
+          sources live in the Protos repository.
+        </p>
+        <a href={canonicalRepository}>GitHub</a>
+      </div>
+    </footer>
+  </body>
+</html>
