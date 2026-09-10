@@ -15,6 +15,11 @@ semantics or maintained canonical language documentation.
   sources from the exact revision recorded in `protos-source.lock.json`.
 - Generated/materialized canonical Protos inputs must not be committed as a
   separately maintained content fork.
+- Syntax highlighting must consume the reusable non-normative TextMate grammar
+  owned by the exact locked Protos revision at
+  `editors/vscode/syntaxes/protos.tmLanguage.json`; this repository may adapt
+  renderer registration metadata but must not maintain an independent Protos
+  grammar.
 - Website work must not silently redefine Protos semantics.
 
 ## Architecture

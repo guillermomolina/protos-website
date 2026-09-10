@@ -14,11 +14,14 @@ specification, guide, tutorial, example, and selected design sources remain in
 The website consumes an exact read-only Protos revision recorded in
 `protos-source.lock.json`.
 
-Initial locked Protos revision:
+The selected revision is intentionally recorded only in
+`protos-source.lock.json` so documentation does not duplicate a stale mutable
+description of the current source input.
 
-```text
-9f33e1b0e29d0439daebe278c8897f209ad4ce9e
-```
+Syntax highlighting also comes from that exact source revision: the website
+loads Protos' reusable non-normative TextMate grammar from
+`editors/vscode/syntaxes/protos.tmLanguage.json` rather than maintaining a
+website-specific grammar.
 
 ## Local development
 

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "repository": "https://github.com/guillermomolina/protos.git",
-  "revision": "92d87ae0ea5f8449ac927c5696dfcc772ecd6d64",
+  "revision": "3a92521fa492441070dd243cfb23c04cc370fc17",
   "canonicalPaths": [
     "README.md",
     "docs/guide",
@@ -9,6 +9,7 @@
     "docs/assets/branding",
     "spec",
     "protos/tutorials",
-    "protos/examples"
+    "protos/examples",
+    "editors/vscode/syntaxes/protos.tmLanguage.json"
   ]
 }

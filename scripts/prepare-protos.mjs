@@ -39,6 +39,36 @@ const checkOnly = process.argv.includes('--check');
 const brandingSourceDirectory = join(cache, 'docs/assets/branding');
 const brandingOutputDirectory = join(root, 'public/protos-branding');
 const brandingFiles = ['protos-logo.png', 'protos-symbol.png'];
+const protosGrammarSource = join(
+  cache,
+  'editors/vscode/syntaxes/protos.tmLanguage.json',
+);
+
+function protosGrammarSourceMatches() {
+  if (!existsSync(protosGrammarSource)) return false;
+
+  try {
+    const grammar = JSON.parse(readFileSync(protosGrammarSource, 'utf8'));
+    return (
+      grammar.name === 'Protos' &&
+      grammar.scopeName === 'source.protos' &&
+      Array.isArray(grammar.patterns) &&
+      grammar.patterns.length > 0 &&
+      typeof grammar.repository === 'object' &&
+      grammar.repository !== null
+    );
+  } catch {
+    return false;
+  }
+}
+
+function requireProtosGrammarSource() {
+  if (!protosGrammarSourceMatches()) {
+    throw new Error(
+      `Canonical Protos TextMate grammar does not match locked revision ${lock.revision}`,
+    );
+  }
+}
 
 function run(args, options = {}) {
   return execFileSync(args[0], args.slice(1), {
@@ -102,6 +132,8 @@ function materializeBranding() {
 }
 
 if (cacheMatches()) {
+  requireProtosGrammarSource();
+
   if (checkOnly) {
     if (!brandingMatchesSource()) {
       throw new Error(
@@ -116,6 +148,7 @@ if (cacheMatches()) {
     console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
     console.log(`PROTOS_BRANDING_READY: ${lock.revision}`);
     console.log(`PROTOS_GUIDE_READY: ${lock.revision}`);
+    console.log(`PROTOS_GRAMMAR_READY: ${lock.revision}`);
     process.exit(0);
   }
 
@@ -162,6 +195,7 @@ try {
     'spec',
     'protos/tutorials',
     'protos/examples',
+    'editors/vscode/syntaxes',
   ]);
   run(['git', '-C', temporary, 'checkout', '--detach', 'FETCH_HEAD']);
 
@@ -181,6 +215,7 @@ try {
 
   writeFileSync(join(temporary, '.protos-revision'), `${actual}\n`, 'utf8');
   renameSync(temporary, cache);
+  requireProtosGrammarSource();
   materializeBranding();
   materializeProtosGuide({ root, cache, lock });
   console.log(`PROTOS_SOURCE_FETCH: PASS revision=${actual}`);
