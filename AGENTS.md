@@ -30,9 +30,21 @@ WEB001-B ratified, with its original hosting component superseded by WEB001-F:
   a private reverse proxy;
 - NGINX Unprivileged as the WEB001-G production static-serving runtime, using an
   Alpine slim image pinned by exact version and immutable digest;
-- the public repository owns only portable build/serving behavior; routing, TLS,
-  network names, host paths, credentials, and production orchestration remain
-  private deployment concerns;
+- WEB001-H publishes the production image to GHCR from GitHub Actions and
+  production consumes the published image by immutable manifest digest;
+- the registry workflow may publish a full commit-SHA tag for discovery, but a
+  mutable tag is never deployment authority;
+- the production image is published for `linux/amd64` and `linux/arm64`; because
+  Astro output is architecture-independent, the Node build stage runs on
+  `$BUILDPLATFORM` and the final serving stage resolves per target platform
+  without QEMU;
+- registry publication uses only the repository-scoped ephemeral `GITHUB_TOKEN`
+  with `packages: write`; no personal access token is stored for publication;
+- the published container package must be anonymously readable before the
+  publication workflow is considered successful;
+- the public repository owns only portable build/serving/delivery behavior;
+  routing, TLS, network names, host paths, credentials, and production
+  orchestration remain private deployment concerns;
 - GitHub Pages is superseded and is not retained as a standby production path;
 - no write authority from the website to `guillermomolina/protos`;
 - any future code-executing playground is a separate security/deployment
@@ -52,5 +64,5 @@ WEB001-B ratified, with its original hosting component superseded by WEB001-F:
   compatibility, or authority decision, stop that slice and return to the Protos
   WEBxxx governance/approval process.
 
-Canonical live coordination for the production static-serving image is Protos
-Issue #297 (`WEB001-G`), under WEB001 / #278.
+Canonical live coordination for production-image delivery is Protos Issue #299
+(`WEB001-H`), under WEB001 / #278.

@@ -1,4 +1,4 @@
-FROM node:24.21.0-bookworm-slim AS base
+FROM --platform=$BUILDPLATFORM node:24.21.0-bookworm-slim AS base
 
 USER root
 RUN apt-get update \

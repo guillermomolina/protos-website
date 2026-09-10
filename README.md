@@ -81,7 +81,31 @@ The final image is NGINX Unprivileged on internal HTTP port 8080. Node, npm, Git
 the website source tree, and build dependencies remain in earlier build stages;
 only generated static output is copied into the serving image.
 
-## Deployment
+## Production image delivery
+
+Every push to `main` publishes the validated `production` target to:
+
+```text
+ghcr.io/guillermomolina/protos-website
+```
+
+The workflow publishes `linux/amd64` and `linux/arm64` variants and adds a
+full-commit tag such as `sha-<40-hex-commit>` for discovery. **Production
+deployment identity is the manifest digest, not a tag**, for example:
+
+```text
+ghcr.io/guillermomolina/protos-website@sha256:<64-hex-digest>
+```
+
+The workflow reports that exact reference in the GitHub Actions job summary,
+logs out of GHCR, and then verifies that the manifest is anonymously readable
+and contains both target architectures.
+
+Publication uses GitHub's repository-scoped ephemeral `GITHUB_TOKEN` with only
+`contents: read` and `packages: write`. No personal GitHub token is stored in
+the repository or required for image publication.
+
+## Deployment boundary
 
 The public repository deliberately contains no environment-specific production
 routing, TLS, network names, host paths, credentials, or orchestration
@@ -93,5 +117,5 @@ mechanism can be changed later without changing website semantics.
 
 ## Project coordination
 
-Production static-serving-image work is tracked in
-[WEB001-G / Protos #297](https://github.com/guillermomolina/protos/issues/297).
+Production image-delivery work is tracked in
+[WEB001-H / Protos #299](https://github.com/guillermomolina/protos/issues/299).
