@@ -33,7 +33,7 @@ or outcome worth tracking.
 ## Contributing
 
 Read the
-[contribution guide](https://github.com/guillermomolina/protos/blob/3a92521fa492441070dd243cfb23c04cc370fc17/CONTRIBUTING.md)
+[contribution guide](https://github.com/guillermomolina/protos/blob/6305eaa0af323d3cb1eaf47311e66a9986915118/CONTRIBUTING.md)
 before preparing a substantial change.
 
 For external contributions, a branch or fork followed by a Pull Request is the
@@ -52,19 +52,19 @@ Do **not** publish vulnerability details, credentials, private data, or working
 exploit material in an ordinary public Issue or Discussion.
 
 Follow the canonical
-[Security Policy](https://github.com/guillermomolina/protos/blob/3a92521fa492441070dd243cfb23c04cc370fc17/SECURITY.md),
+[Security Policy](https://github.com/guillermomolina/protos/blob/6305eaa0af323d3cb1eaf47311e66a9986915118/SECURITY.md),
 which directs reporters to GitHub's private vulnerability-reporting path when
 available.
 
 ## Conduct and support
 
 Project spaces follow the
-[Code of Conduct](https://github.com/guillermomolina/protos/blob/3a92521fa492441070dd243cfb23c04cc370fc17/CODE_OF_CONDUCT.md).
+[Code of Conduct](https://github.com/guillermomolina/protos/blob/6305eaa0af323d3cb1eaf47311e66a9986915118/CODE_OF_CONDUCT.md).
 Strong technical disagreement is welcome; personal attacks and harassment are
 not.
 
 Support is currently best-effort because Protos is experimental. The canonical
-[Support guide](https://github.com/guillermomolina/protos/blob/3a92521fa492441070dd243cfb23c04cc370fc17/SUPPORT.md)
+[Support guide](https://github.com/guillermomolina/protos/blob/6305eaa0af323d3cb1eaf47311e66a9986915118/SUPPORT.md)
 explains where to ask questions and what information makes them easier to
 answer.
 

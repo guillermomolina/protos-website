@@ -31,6 +31,10 @@ import {
   protosLibrarySourceMatches,
 } from './materialize-protos-library-source.mjs';
 import {
+  materializeProtosCanonicalLinks,
+  protosCanonicalLinksMatch,
+} from './materialize-protos-canonical-links.mjs';
+import {
   ensureProtosLibraryDocumentationArtifact,
   loadProtosLibraryDocumentationArtifact,
   materializeProtosLibraryApi,
@@ -58,6 +62,18 @@ const cache = configuredCache
   : join(root, '.protos-source');
 const marker = join(cache, '.protos-revision');
 const checkOnly = process.argv.includes('--check');
+
+if (checkOnly) {
+  if (!protosCanonicalLinksMatch({ root, lock })) {
+    throw new Error(
+      `Manual canonical Protos links do not match locked revision ${lock.revision}`,
+    );
+  }
+  console.log(`PROTOS_CANONICAL_LINKS_READY: ${lock.revision}`);
+} else {
+  materializeProtosCanonicalLinks({ root, lock });
+}
+
 const brandingSourceDirectory = join(cache, 'docs/assets/branding');
 const brandingOutputDirectory = join(root, 'public/protos-branding');
 const brandingFiles = ['protos-logo.png', 'protos-symbol.png'];

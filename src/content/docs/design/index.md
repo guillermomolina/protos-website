@@ -76,7 +76,7 @@ not as the default substrate for scale.
 
 The complete non-normative rationale for the source revision consumed by this
 website is the
-[Protos Design Philosophy](https://github.com/guillermomolina/protos/blob/3a92521fa492441070dd243cfb23c04cc370fc17/docs/design/PROTOS_DESIGN_PHILOSOPHY.md).
+[Protos Design Philosophy](https://github.com/guillermomolina/protos/blob/6305eaa0af323d3cb1eaf47311e66a9986915118/docs/design/PROTOS_DESIGN_PHILOSOPHY.md).
 
 For defined behavior rather than rationale, use the
 [Language reference](/reference/language/).
