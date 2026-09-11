@@ -35,6 +35,10 @@ const principles = [
 
 const canonicalRepository = 'https://github.com/guillermomolina/protos';
 const releasePage = 'https://github.com/guillermomolina/protos/releases/tag/v0.2.236';
+const canonicalSite = 'https://protos.guillermomolina.com/';
+const socialImage = 'https://protos.guillermomolina.com/icon-512x512.png';
+const socialDescription =
+  'Protos is an experimental prototype-based programming language built from a small set of composable mechanisms.';
 ---
 
 <!doctype html>
@@ -47,8 +51,32 @@ const releasePage = 'https://github.com/guillermomolina/protos/releases/tag/v0.2
     />
     <meta
       name="description"
-      content="Protos is an experimental prototype-based programming language built from a small set of composable mechanisms."
+      content={socialDescription}
     />
+    <link rel="canonical" href={canonicalSite} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Protos" />
+    <meta
+      property="og:title"
+      content="Protos — Experimental prototype-based programming language"
+    />
+    <meta property="og:description" content={socialDescription} />
+    <meta property="og:url" content={canonicalSite} />
+    <meta property="og:image" content={socialImage} />
+    <meta
+      property="og:image:alt"
+      content="Protos programming language"
+    />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Protos — Experimental prototype-based programming language"
+    />
+    <meta name="twitter:description" content={socialDescription} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="Protos programming language" />
     <meta name="theme-color" content="#f7fafc" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

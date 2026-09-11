@@ -12,6 +12,19 @@ tests, benchmarks, tools, examples, and other contributions are welcome.
 GitHub remains the live project coordination surface; this website does not
 mirror issue state or design conversations.
 
+## Make your first contribution
+
+If you are new to Protos, start with the pinned newcomer Discussion:
+[Want to make your first contribution to Protos? Start here 🌱](https://github.com/guillermomolina/protos/discussions?discussions_q=Want+to+make+your+first+contribution+to+Protos).
+
+It points newcomers toward the current contribution path without copying live
+Issue state into this website. You can also
+[browse open good first issues](https://github.com/guillermomolina/protos/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22).
+
+Useful contributions are not limited to runtime code. Documentation, executable
+examples, tests, independent environment/installation reports, tooling, and
+focused bug reproduction are all valid ways to help.
+
 ## Questions, ideas, and design discussion
 
 Use [GitHub Discussions](https://github.com/guillermomolina/protos/discussions)
