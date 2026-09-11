@@ -25,7 +25,12 @@ website-specific grammar.
 
 ## Local development
 
-With Node.js 22.12 or newer:
+J7B documentation generation uses the Protos-owned producer from the exact
+revision in `protos-source.lock.json`. Native development requires Node.js 22.12
+or newer plus **one** producer-toolchain path:
+
+- local JDK 21 + Maven 3.9 or newer; or
+- Docker, used only as a fallback to run the pinned Maven/JDK producer image.
 
 ```sh
 npm ci
@@ -35,7 +40,13 @@ npm run dev
 Then open `http://localhost:4321`.
 
 The first run materializes the locked canonical Protos source subset into the
-ignored `.protos-source` cache.
+ignored `.protos-source` cache, compiles the documentation producer from that
+same checkout, generates a revision-validated D064 JSON artifact, and renders
+the Standard Library API pages. If a suitable local JDK/Maven toolchain is not
+available, the same exact checkout is mounted read-write into the pinned
+Maven/JDK container solely for producer execution. The JSON artifact and
+generated pages are ephemeral derived build inputs, never maintained API
+authority.
 
 ## Docker Compose
 
@@ -81,8 +92,9 @@ docker run --rm -p 127.0.0.1:8080:8080 protos-website:local
 Then open `http://localhost:8080`.
 
 The final image is NGINX Unprivileged on internal HTTP port 8080. Node, npm, Git,
-the website source tree, and build dependencies remain in earlier build stages;
-only generated static output is copied into the serving image.
+JDK, Maven, the website source tree, and all documentation/build dependencies
+remain in earlier build stages; only generated static output is copied into the
+serving image.
 
 ## Production image delivery
 

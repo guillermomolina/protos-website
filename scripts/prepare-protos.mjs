@@ -30,6 +30,12 @@ import {
   materializeProtosLibrarySource,
   protosLibrarySourceMatches,
 } from './materialize-protos-library-source.mjs';
+import {
+  ensureProtosLibraryDocumentationArtifact,
+  loadProtosLibraryDocumentationArtifact,
+  materializeProtosLibraryApi,
+  protosLibraryApiMatches,
+} from './materialize-protos-library-api.mjs';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const root = resolve(scriptDir, '..');
@@ -181,6 +187,24 @@ if (cacheMatches()) {
         `Generated Protos library source browser does not match locked revision ${lock.revision}`,
       );
     }
+    const documentationArtifact =
+      loadProtosLibraryDocumentationArtifact({ cache, lock });
+    if (!documentationArtifact) {
+      throw new Error(
+        `D064 Standard Library documentation artifact is absent or does not match locked revision ${lock.revision}`,
+      );
+    }
+    if (
+      !protosLibraryApiMatches({
+        root,
+        lock,
+        artifact: documentationArtifact,
+      })
+    ) {
+      throw new Error(
+        `Generated Protos library API reference does not match locked revision ${lock.revision}`,
+      );
+    }
     console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
     console.log(`PROTOS_BRANDING_READY: ${lock.revision}`);
     console.log(`PROTOS_GUIDE_READY: ${lock.revision}`);
@@ -188,6 +212,7 @@ if (cacheMatches()) {
     console.log(`PROTOS_EXAMPLES_READY: ${lock.revision}`);
     console.log(`PROTOS_SPEC_REFERENCE_READY: ${lock.revision}`);
     console.log(`PROTOS_LIBRARY_SOURCE_READY: ${lock.revision}`);
+    console.log(`PROTOS_LIBRARY_API_READY: ${lock.revision}`);
     console.log(`PROTOS_GRAMMAR_READY: ${lock.revision}`);
     process.exit(0);
   }
@@ -198,6 +223,13 @@ if (cacheMatches()) {
   materializeProtosExamples({ root, cache, lock });
   materializeProtosSpecReference({ root, cache, lock });
   materializeProtosLibrarySource({ root, cache, lock });
+  const documentationArtifact =
+    ensureProtosLibraryDocumentationArtifact({ cache, lock });
+  materializeProtosLibraryApi({
+    root,
+    lock,
+    artifact: documentationArtifact,
+  });
   console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
   process.exit(0);
 }
@@ -240,6 +272,7 @@ try {
     'protos/tutorials',
     'protos/examples',
     'protos/lib',
+    'src/main',
     'editors/vscode/syntaxes',
   ]);
   run(['git', '-C', temporary, 'checkout', '--detach', 'FETCH_HEAD']);
@@ -267,6 +300,13 @@ try {
   materializeProtosExamples({ root, cache, lock });
   materializeProtosSpecReference({ root, cache, lock });
   materializeProtosLibrarySource({ root, cache, lock });
+  const documentationArtifact =
+    ensureProtosLibraryDocumentationArtifact({ cache, lock });
+  materializeProtosLibraryApi({
+    root,
+    lock,
+    artifact: documentationArtifact,
+  });
   console.log(`PROTOS_SOURCE_FETCH: PASS revision=${actual}`);
 } catch (error) {
   rmSync(temporary, { recursive: true, force: true });

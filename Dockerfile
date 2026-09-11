@@ -1,9 +1,18 @@
+FROM --platform=$BUILDPLATFORM maven:3.9.16-eclipse-temurin-21@sha256:a972570be789ee5c9fa23446a8914ac7327560b5c022f662cfa9452aef829f18 AS protos-doc-toolchain
+
 FROM --platform=$BUILDPLATFORM node:24.21.0-bookworm-slim AS base
 
 USER root
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git ca-certificates \
     && rm -rf /var/lib/apt/lists/*
+
+COPY --from=protos-doc-toolchain /opt/java/openjdk /opt/java/openjdk
+COPY --from=protos-doc-toolchain /usr/share/maven /usr/share/maven
+
+ENV JAVA_HOME=/opt/java/openjdk
+ENV MAVEN_HOME=/usr/share/maven
+ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}"
 
 WORKDIR /workspace
 COPY package.json package-lock.json ./

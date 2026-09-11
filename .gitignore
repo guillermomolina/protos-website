@@ -41,6 +41,10 @@
 # The curated standard-library index stays tracked.
 /src/content/docs/reference/standard-library/source/
 
+# Generated exact-SHA D064 Standard Library API reference.
+# The curated standard-library index stays tracked.
+/src/content/docs/reference/standard-library/api/
+
 # Local/editor noise
 .DS_Store
 npm-debug.log*
