@@ -214,7 +214,7 @@ function localJava21Available() {
   });
   if (result.error || result.status !== 0) return false;
   const output = `${result.stdout ?? ''}\n${result.stderr ?? ''}`;
-  const match = output.match(/version\\s+"(\\d+)/);
+  const match = output.match(/version\s+"(\d+)/);
   return match !== null && Number(match[1]) >= 21;
 }
 
