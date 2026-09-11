@@ -34,6 +34,7 @@ const principles = [
 ];
 
 const canonicalRepository = 'https://github.com/guillermomolina/protos';
+const releasePage = 'https://github.com/guillermomolina/protos/releases/tag/v0.2.236';
 ---
 
 <!doctype html>
@@ -95,11 +96,12 @@ const canonicalRepository = 'https://github.com/guillermomolina/protos';
             <div class="maturity" aria-label="Project maturity">
               <span>Core language: v0.1 draft</span>
               <span>Reference implementation: active development</span>
+              <span>Portable pre-release: 0.2.236</span>
             </div>
 
             <div class="hero-actions">
-              <a class="button primary" href="/learn/">Learn Protos</a>
-              <a class="button secondary" href="/reference/">Read the reference</a>
+              <a class="button primary" href={releasePage} rel="noreferrer">Download 0.2.236</a>
+              <a class="button secondary" href="/learn/getting-started/">Get started</a>
               <a class="text-action" href={canonicalRepository}>View on GitHub →</a>
             </div>
           </div>
