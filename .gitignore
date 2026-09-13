@@ -45,6 +45,11 @@
 # The curated standard-library index stays tracked.
 /src/content/docs/reference/standard-library/api/
 
+# Generated exact-SHA project news archive and Home metadata.
+# Canonical milestone content remains owned by guillermomolina/protos/docs/news/.
+/src/content/docs/community/news/
+/src/generated/protos-news.json
+
 # Local/editor noise
 .DS_Store
 npm-debug.log*

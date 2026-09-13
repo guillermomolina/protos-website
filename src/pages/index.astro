@@ -1,7 +1,10 @@
 ---
 import '../styles/home.css';
+import protosNews from '../generated/protos-news.json';
 
 const brandLogo = '/protos-branding/protos-logo.png';
+
+const latestNews = protosNews.entries.slice(0, 3);
 
 const navigation = [
   { label: 'Learn', href: '/learn/' },
@@ -198,6 +201,35 @@ dog.<span class="syntax-call">speak</span>()</code></pre>
             </p>
             <a href="/design/">Explore the design philosophy →</a>
           </div>
+        </div>
+      </section>
+
+      <section class="latest-news" aria-labelledby="latest-news-title">
+        <div class="shell">
+          <div class="section-heading news-heading">
+            <p class="eyebrow">Project milestones</p>
+            <h2 id="latest-news-title">Latest news.</h2>
+            <p>
+              Durable project milestones rendered from the exact Protos source
+              revision selected by this website.
+            </p>
+          </div>
+
+          <div class="news-grid">
+            {
+              latestNews.map((entry) => (
+                <article class="news-card">
+                  <p class="news-date">{entry.date}</p>
+                  <h3><a href={entry.href}>{entry.title}</a></h3>
+                  <p>{entry.summary}</p>
+                </article>
+              ))
+            }
+          </div>
+
+          <a class="news-archive-link" href="/community/news/">
+            Browse all news and milestones →
+          </a>
         </div>
       </section>
 

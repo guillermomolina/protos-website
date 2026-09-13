@@ -35,6 +35,10 @@ import {
   protosCanonicalLinksMatch,
 } from './materialize-protos-canonical-links.mjs';
 import {
+  materializeProtosNews,
+  protosNewsMatchesSource,
+} from './materialize-protos-news.mjs';
+import {
   ensureProtosLibraryDocumentationArtifact,
   loadProtosLibraryDocumentationArtifact,
   materializeProtosLibraryApi,
@@ -221,6 +225,11 @@ if (cacheMatches()) {
         `Generated Protos library API reference does not match locked revision ${lock.revision}`,
       );
     }
+    if (!protosNewsMatchesSource({ root, cache, lock })) {
+      throw new Error(
+        `Generated Protos news does not match locked revision ${lock.revision}`,
+      );
+    }
     console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
     console.log(`PROTOS_BRANDING_READY: ${lock.revision}`);
     console.log(`PROTOS_GUIDE_READY: ${lock.revision}`);
@@ -229,6 +238,7 @@ if (cacheMatches()) {
     console.log(`PROTOS_SPEC_REFERENCE_READY: ${lock.revision}`);
     console.log(`PROTOS_LIBRARY_SOURCE_READY: ${lock.revision}`);
     console.log(`PROTOS_LIBRARY_API_READY: ${lock.revision}`);
+    console.log(`PROTOS_NEWS_READY: ${lock.revision}`);
     console.log(`PROTOS_GRAMMAR_READY: ${lock.revision}`);
     process.exit(0);
   }
@@ -246,6 +256,7 @@ if (cacheMatches()) {
     lock,
     artifact: documentationArtifact,
   });
+  materializeProtosNews({ root, cache, lock });
   console.log(`PROTOS_SOURCE_READY: ${lock.revision}`);
   process.exit(0);
 }
@@ -282,6 +293,7 @@ try {
     'sparse-checkout',
     'set',
     'docs/guide',
+    'docs/news',
     'docs/design',
     'docs/assets/branding',
     'spec',
@@ -323,6 +335,7 @@ try {
     lock,
     artifact: documentationArtifact,
   });
+  materializeProtosNews({ root, cache, lock });
   console.log(`PROTOS_SOURCE_FETCH: PASS revision=${actual}`);
 } catch (error) {
   rmSync(temporary, { recursive: true, force: true });
