@@ -7,42 +7,43 @@ description: Download the portable Protos pre-release, run a program, use the RE
 
 Protos is under active development and its Core v0.1 specification is still a
 draft. The fastest way to try the reference implementation is the published
-portable POSIX/JVM pre-release, currently `v0.2.236`. It is a pre-release, not a
+portable POSIX/JVM pre-release, currently `v0.3.0`. It is a pre-release, not a
 stability or compatibility promise.
 
 The website can document a newer exact source revision than the latest portable
 release. The runtime and capability contract in this section is therefore tied
-explicitly to `v0.2.236`.
+explicitly to `v0.3.0`.
 
 ## Try the portable pre-release
 
 ### 1. Use the supported runtime
 
-The `v0.2.236` portable bundle requires:
+The `v0.3.0` portable bundle requires:
 
-- **GraalVM Community Edition for JDK 22**;
-- Java feature version **22**;
-- Truffle runtime **24.0.0**.
+- **GraalVM Community Edition for JDK 25.0.4.1**;
+- Java feature version **25**;
+- Truffle runtime **25.3.4.1**.
 
-The JDK is not bundled. Java 21 is the bytecode target for this release; that is
-**not** a claim that arbitrary Java 21+ runtimes are supported.
+The JDK is not bundled. The portable bundle supports the declared DIST001
+GraalVM/JDK 25 runtime contract; this is not a claim of support for arbitrary
+JDK distributions or Java versions.
 
-### 2. Download and verify Protos 0.2.236
+### 2. Download and verify Protos 0.3.0
 
-Open the [Protos 0.2.236 release](https://github.com/guillermomolina/protos/releases/tag/v0.2.236)
+Open the [Protos 0.3.0 release](https://github.com/guillermomolina/protos/releases/tag/v0.3.0)
 and download both:
 
-- [`protos-0.2.236-posix-jvm.zip`](https://github.com/guillermomolina/protos/releases/download/v0.2.236/protos-0.2.236-posix-jvm.zip)
-- [`protos-0.2.236-posix-jvm.zip.sha256`](https://github.com/guillermomolina/protos/releases/download/v0.2.236/protos-0.2.236-posix-jvm.zip.sha256)
+- [`protos-0.3.0-posix-jvm.zip`](https://github.com/guillermomolina/protos/releases/download/v0.3.0/protos-0.3.0-posix-jvm.zip)
+- [`protos-0.3.0-posix-jvm.zip.sha256`](https://github.com/guillermomolina/protos/releases/download/v0.3.0/protos-0.3.0-posix-jvm.zip.sha256)
 
 With both files in the same directory, verify the archive:
 
 ```sh
-sha256sum -c protos-0.2.236-posix-jvm.zip.sha256
+sha256sum -c protos-0.3.0-posix-jvm.zip.sha256
 ```
 
 The expected archive SHA-256 is
-`b1a58ba445d082156bd4eb637ee6df70c046abdee600d468c0fac29be065e296`.
+`2cb9dea7091e391b0bb93d6533367914fe580d6fc05669da0be7e1f4a66c5fe7`.
 
 ### 3. Extract and run it
 
