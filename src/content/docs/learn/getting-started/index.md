@@ -1,121 +1,162 @@
 ---
-title: Getting started
-description: Download the portable Protos pre-release, run a program, use the REPL, or build from source.
+title: "Try Protos"
 ---
 
-# Getting started
+> **Canonical source:** [`docs/guide/00-try-protos.md`](https://github.com/guillermomolina/protos/blob/7c0d6f7d3628ee54752bda6738552c93b330e5b8/docs/guide/00-try-protos.md) at locked
+> revision `7c0d6f7d3628ee54752bda6738552c93b330e5b8`. This rendered page is non-normative; the
+> applicable Protos specification remains authoritative.
 
-Protos is under active development and its Core v0.1 specification is still a
-draft. The fastest way to try the reference implementation is the published
-portable POSIX/JVM pre-release, currently `v0.3.0`. It is a pre-release, not a
-stability or compatibility promise.
+The quickest way to try Protos is to use the official Protos Dev Container. It
+provides a ready-to-use environment with a pinned Protos release, its supported
+GraalVM runtime, the official VS Code extension, canonical examples, and
+debugging support.
 
-The website can document a newer exact source revision than the latest portable
-release. The runtime and capability contract in this section is therefore tied
-explicitly to `v0.3.0`.
+You can also install the official Protos distribution manually if you prefer to
+manage the runtime and installation yourself.
 
-## Try the portable pre-release
+## Option 1: Protos Dev Container
 
-### 1. Use the supported runtime
+This is the recommended path for getting started quickly.
 
-The `v0.3.0` portable bundle requires:
+### Prerequisites
 
-- **GraalVM Community Edition for JDK 25.0.4.1**;
-- Java feature version **25**;
-- Truffle runtime **25.3.4.1**.
+You need:
 
-The JDK is not bundled. The portable bundle supports the declared DIST001
-GraalVM/JDK 25 runtime contract; this is not a claim of support for arbitrary
-JDK distributions or Java versions.
+- Git;
+- Docker or another environment supported by VS Code Dev Containers;
+- Visual Studio Code;
+- the VS Code Dev Containers extension.
 
-### 2. Download and verify Protos 0.3.0
-
-Open the [Protos 0.3.0 release](https://github.com/guillermomolina/protos/releases/tag/v0.3.0)
-and download both:
-
-- [`protos-0.3.0-posix-jvm.zip`](https://github.com/guillermomolina/protos/releases/download/v0.3.0/protos-0.3.0-posix-jvm.zip)
-- [`protos-0.3.0-posix-jvm.zip.sha256`](https://github.com/guillermomolina/protos/releases/download/v0.3.0/protos-0.3.0-posix-jvm.zip.sha256)
-
-With both files in the same directory, verify the archive:
+Clone the Dev Container repository:
 
 ```sh
-sha256sum -c protos-0.3.0-posix-jvm.zip.sha256
+git clone https://github.com/guillermomolina/protos-devcontainer.git
+cd protos-devcontainer
+code .
 ```
 
-The expected archive SHA-256 is
-`2cb9dea7091e391b0bb93d6533367914fe580d6fc05669da0be7e1f4a66c5fe7`.
+Open the repository in its Dev Container when prompted by VS Code.
 
-### 3. Extract and run it
-
-Extract the ZIP into a new directory and run these commands from the extracted
-bundle root, the directory that contains `bin/protos`:
+Once the container is ready, verify the installed Protos release:
 
 ```sh
-bin/protos --version
-bin/protos -e 'print("Hello, Protos!")'
-bin/protos protos/examples/hello-world.protos
+protos --version
 ```
 
-No Maven build is required to use the portable bundle.
+The container already provides the selected Protos distribution, its supported
+GraalVM runtime, and the official Protos VS Code extension. You do not need to
+install another Protos runtime inside the container.
 
-### 4. Start the REPL
+### Run a canonical example
 
-Run the CLI with no arguments:
+The Dev Container includes a curated snapshot of examples from the corresponding
+Protos release.
+
+For example:
 
 ```sh
-bin/protos
+protos examples/basics/slots.protos
 ```
 
-## Build from source
+That program creates and updates a slot and prints the resulting value.
 
-Building from source is the developer/contributor path, not a prerequisite for
-trying the public pre-release. From a compatible
-[Protos source checkout](https://github.com/guillermomolina/protos), follow the
-current repository toolchain requirements and build with:
+Browse `examples/README.md` for the available examples covering algorithms,
+basics, closures, collections, concurrency, control flow, objects, and paths.
+
+The examples bundled in the Dev Container are a convenience snapshot. Their
+canonical source remains the main Protos repository.
+
+### Write and debug your own program
+
+You can create your own `.protos` files directly in the Dev Container workspace
+and run them with the `protos` command.
+
+For example, create `hello.protos` with:
+
+```protos
+print("Hello, Protos!")
+```
+
+and run:
 
 ```sh
-mvn package
+protos hello.protos
 ```
 
-Then the same CLI entry point is available from that checkout:
+Open a `.protos` file in VS Code and use the Protos debugging support provided
+by the official extension.
+
+The Dev Container is intended to make this path work without installing the
+language runtime or editor integration separately.
+
+## Option 2: Manual installation
+
+The official Protos release distribution is the supported starting point for a
+manual installation.
+
+Go to the Protos releases page:
+
+https://github.com/guillermomolina/protos/releases
+
+Select the release you want to install and read its release metadata before
+choosing a runtime. Protos distributions are published against a specific
+supported GraalVM/JDK stack; do not assume that an arbitrary Java installation
+is equivalent.
+
+Download the appropriate portable distribution and, when integrity information
+is published with the release, verify the downloaded artifact before installing
+it.
+
+Extract the archive into a location of your choice. The distribution owns its
+internal launcher and runtime layout, so keep the extracted distribution
+structure intact.
+
+Make its `bin/protos` launcher available from your shell, either by invoking it
+directly or by adding an appropriate launcher location to your `PATH`.
+
+Verify the installation:
 
 ```sh
-bin/protos -e 'print("Hello, Protos!")'
+protos --version
 ```
 
-## A first look at the object model
-
-```js
-animal: {
-    alive: true
-
-    speak: () => {
-        print(name)
-    }
-}
-
-dog: animal {
-    name: "Rex"
-}
-
-dog.speak()
-```
-
-`dog` delegates to `animal`. There are no classes or constructors in this
-example: objects delegate directly to other objects.
-
-A fundamental Protos distinction is visible even in small programs:
+Then create:
 
 ```text
-: creates a slot
-= modifies an existing slot
+hello.protos
 ```
 
-Continue with the [programming guide](/learn/guide/) for the mental model, or
-the [tutorials](/learn/tutorials/) for progressive executable programs.
+containing:
 
-## Authority
+```protos
+print("Hello, Protos!")
+```
 
-This page is an onboarding view. Observable language syntax and semantics are
-defined by the [language reference](/reference/language/) and, ultimately, the
-normative specification in the canonical Protos repository.
+and run:
+
+```sh
+protos hello.protos
+```
+
+The official distribution launcher is the normal manual execution path. Direct
+assembly of the implementation with commands such as `java -jar` is not
+required for ordinary Protos use.
+
+## Where to go next
+
+Once the first program runs:
+
+- read the [Protos Programming Guide](/learn/guide/);
+- explore the canonical [tutorials](/learn/tutorials/);
+- explore the task-oriented [examples](/learn/examples/);
+- use the
+  [Protos Dev Container](https://github.com/guillermomolina/protos-devcontainer)
+  for a preconfigured editor/runtime environment;
+- use the
+  [official Protos VS Code extension](https://github.com/guillermomolina/protos-vscode-extension)
+  for language and debugging integration.
+
+The normative language specification remains under [`../../spec/`](https://github.com/guillermomolina/protos/tree/7c0d6f7d3628ee54752bda6738552c93b330e5b8/spec).
+This guide explains how to get started with the published implementation; it
+does not redefine Protos language semantics.
+

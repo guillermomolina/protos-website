@@ -12,6 +12,7 @@ import { join, posix } from 'node:path';
 const NUMBERED_GUIDE_RE = /^\d{2}-[a-z0-9-]+\.md$/;
 const GENERATED_OUTPUT_RE = /^(?:\d{2}-[a-z0-9-]+|source-style)\.md$/;
 const SOURCE_STYLE = 'SOURCE_STYLE.md';
+const TRY_PROTOS = '00-try-protos.md';
 
 function sourceGuideFiles(cache) {
   const directory = join(cache, 'docs/guide');
@@ -27,6 +28,7 @@ function outputName(sourceName) {
 
 function outputRoute(sourceName) {
   if (sourceName === 'README.md') return '/learn/guide/';
+  if (sourceName === TRY_PROTOS) return '/learn/getting-started/';
   const name = outputName(sourceName).replace(/\.md$/, '');
   return `/learn/guide/${name}/`;
 }
@@ -86,6 +88,16 @@ function rewriteRelativeTarget(target, lock) {
       const rewritten = `${outputRoute(basename)}${suffix}`;
       return wrapped ? `<${rewritten}>` : rewritten;
     }
+  }
+
+  if (canonical === 'protos/tutorials/README.md') {
+    const rewritten = `/learn/tutorials/${suffix}`;
+    return wrapped ? `<${rewritten}>` : rewritten;
+  }
+
+  if (canonical === 'protos/examples/README.md') {
+    const rewritten = `/learn/examples/${suffix}`;
+    return wrapped ? `<${rewritten}>` : rewritten;
   }
 
   if (canonical.startsWith('docs/assets/branding/')) {
@@ -195,7 +207,7 @@ ${rewrittenBody}
 }
 
 function expectedGuidePages({ cache, lock }) {
-  const files = sourceGuideFiles(cache);
+  const files = sourceGuideFiles(cache).filter((name) => name !== TRY_PROTOS);
   if (files.length === 0) {
     throw new Error('Canonical Protos guide source contains no renderable pages');
   }
@@ -213,6 +225,19 @@ function expectedGuidePages({ cache, lock }) {
   return pages;
 }
 
+function expectedGettingStartedPage({ cache, lock }) {
+  const sourcePath = join(cache, 'docs/guide', TRY_PROTOS);
+  if (!existsSync(sourcePath)) {
+    throw new Error(`Canonical Protos guide page missing: ${TRY_PROTOS}`);
+  }
+
+  return transformGuideMarkdown(
+    readFileSync(sourcePath, 'utf8'),
+    TRY_PROTOS,
+    lock,
+  );
+}
+
 function currentGeneratedNames(outputDirectory) {
   if (!existsSync(outputDirectory)) return [];
   return readdirSync(outputDirectory)
@@ -222,9 +247,16 @@ function currentGeneratedNames(outputDirectory) {
 
 export function protosGuideMatchesSource({ root, cache, lock }) {
   const outputDirectory = join(root, 'src/content/docs/learn/guide');
+  const gettingStartedOutput = join(
+    root,
+    'src/content/docs/learn/getting-started/index.md',
+  );
+
   let expected;
+  let expectedGettingStarted;
   try {
     expected = expectedGuidePages({ cache, lock });
+    expectedGettingStarted = expectedGettingStartedPage({ cache, lock });
   } catch {
     return false;
   }
@@ -242,15 +274,30 @@ export function protosGuideMatchesSource({ root, cache, lock }) {
     }
   }
 
+  if (
+    !existsSync(gettingStartedOutput) ||
+    readFileSync(gettingStartedOutput, 'utf8') !== expectedGettingStarted
+  ) {
+    return false;
+  }
+
   return true;
 }
 
 export function materializeProtosGuide({ root, cache, lock }) {
   const outputDirectory = join(root, 'src/content/docs/learn/guide');
+  const gettingStartedDirectory = join(
+    root,
+    'src/content/docs/learn/getting-started',
+  );
+  const gettingStartedOutput = join(gettingStartedDirectory, 'index.md');
+
   const expected = expectedGuidePages({ cache, lock });
+  const expectedGettingStarted = expectedGettingStartedPage({ cache, lock });
   const expectedNames = new Set(expected.keys());
 
   mkdirSync(outputDirectory, { recursive: true });
+  mkdirSync(gettingStartedDirectory, { recursive: true });
 
   for (const [name, content] of expected) {
     const output = join(outputDirectory, name);
@@ -259,6 +306,12 @@ export function materializeProtosGuide({ root, cache, lock }) {
     writeFileSync(temporary, content, 'utf8');
     renameSync(temporary, output);
   }
+
+  const gettingStartedTemporary =
+    `${gettingStartedOutput}.tmp-${process.pid}`;
+  rmSync(gettingStartedTemporary, { force: true });
+  writeFileSync(gettingStartedTemporary, expectedGettingStarted, 'utf8');
+  renameSync(gettingStartedTemporary, gettingStartedOutput);
 
   for (const name of currentGeneratedNames(outputDirectory)) {
     if (!expectedNames.has(name)) {
@@ -273,6 +326,7 @@ export function materializeProtosGuide({ root, cache, lock }) {
   }
 
   console.log(
-    `PROTOS_GUIDE_MATERIALIZED: ${lock.revision} pages=${expected.size}`,
+    `PROTOS_GUIDE_MATERIALIZED: ${lock.revision} ` +
+      `pages=${expected.size} getting_started=1`,
   );
 }
