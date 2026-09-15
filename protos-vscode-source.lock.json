@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/guillermomolina/protos-vscode-extension.git",
+  "revision": "28c572560d51bbda33e6bd0a98f71fafbf2b2526",
+  "canonicalPaths": [
+    "syntaxes/protos.tmLanguage.json"
+  ]
+}

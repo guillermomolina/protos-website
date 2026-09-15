@@ -16,10 +16,11 @@ semantics or maintained canonical language documentation.
 - Generated/materialized canonical Protos inputs must not be committed as a
   separately maintained content fork.
 - Syntax highlighting must consume the reusable non-normative TextMate grammar
-  owned by the exact locked Protos revision at
-  `editors/vscode/syntaxes/protos.tmLanguage.json`; this repository may adapt
-  renderer registration metadata but must not maintain an independent Protos
-  grammar.
+  owned by `guillermomolina/protos-vscode-extension`.
+- The exact extension revision consumed by the website is recorded in
+  `protos-vscode-source.lock.json`.
+- This repository may adapt renderer registration metadata but must not maintain
+  an independent Protos grammar.
 - Website work must not silently redefine Protos semantics.
 
 ## Architecture
@@ -69,6 +70,7 @@ WEB001-B ratified, with its original hosting component superseded by WEB001-F:
   compatibility, or authority decision, stop that slice and return to the Protos
   WEBxxx governance/approval process.
 
-Canonical live coordination for public website content is Protos Issue #301
-(`WEB001-J`), under WEB001 / #278. Private production integration remains
-tracked separately in WEB001-I / #300.
+Canonical live coordination for public website content is maintained in
+`guillermomolina/protos-website` Issues. Cross-repository dependencies on
+canonical Protos sources and architecture remain documented by the owning
+repository's Issues and durable decision records.

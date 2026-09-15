@@ -81,37 +81,6 @@ if (checkOnly) {
 const brandingSourceDirectory = join(cache, 'docs/assets/branding');
 const brandingOutputDirectory = join(root, 'public/protos-branding');
 const brandingFiles = ['protos-logo.png', 'protos-symbol.png'];
-const protosGrammarSource = join(
-  cache,
-  'editors/vscode/syntaxes/protos.tmLanguage.json',
-);
-
-function protosGrammarSourceMatches() {
-  if (!existsSync(protosGrammarSource)) return false;
-
-  try {
-    const grammar = JSON.parse(readFileSync(protosGrammarSource, 'utf8'));
-    return (
-      grammar.name === 'Protos' &&
-      grammar.scopeName === 'source.protos' &&
-      Array.isArray(grammar.patterns) &&
-      grammar.patterns.length > 0 &&
-      typeof grammar.repository === 'object' &&
-      grammar.repository !== null
-    );
-  } catch {
-    return false;
-  }
-}
-
-function requireProtosGrammarSource() {
-  if (!protosGrammarSourceMatches()) {
-    throw new Error(
-      `Canonical Protos TextMate grammar does not match locked revision ${lock.revision}`,
-    );
-  }
-}
-
 function run(args, options = {}) {
   return execFileSync(args[0], args.slice(1), {
     cwd: options.cwd ?? root,
@@ -174,7 +143,6 @@ function materializeBranding() {
 }
 
 if (cacheMatches()) {
-  requireProtosGrammarSource();
 
   if (checkOnly) {
     if (!brandingMatchesSource()) {
@@ -301,7 +269,6 @@ try {
     'protos/examples',
     'protos/lib',
     'src/main',
-    'editors/vscode/syntaxes',
   ]);
   run(['git', '-C', temporary, 'checkout', '--detach', 'FETCH_HEAD']);
 
@@ -321,7 +288,6 @@ try {
 
   writeFileSync(join(temporary, '.protos-revision'), `${actual}\n`, 'utf8');
   renameSync(temporary, cache);
-  requireProtosGrammarSource();
   materializeBranding();
   materializeProtosGuide({ root, cache, lock });
   materializeProtosTutorials({ root, cache, lock });

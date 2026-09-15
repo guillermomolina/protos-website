@@ -3,17 +3,18 @@ import { isAbsolute, resolve } from 'node:path';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
-const configuredProtosCache = process.env.PROTOS_SOURCE_CACHE;
-const protosCache = configuredProtosCache
-  ? (isAbsolute(configuredProtosCache)
-      ? configuredProtosCache
-      : resolve(configuredProtosCache))
-  : resolve('.protos-source');
+const configuredProtosVscodeCache =
+  process.env.PROTOS_VSCODE_SOURCE_CACHE;
+const protosVscodeCache = configuredProtosVscodeCache
+  ? (isAbsolute(configuredProtosVscodeCache)
+      ? configuredProtosVscodeCache
+      : resolve(configuredProtosVscodeCache))
+  : resolve('.protos-vscode-source');
 const canonicalProtosGrammar = JSON.parse(
   readFileSync(
     resolve(
-      protosCache,
-      'editors/vscode/syntaxes/protos.tmLanguage.json',
+      protosVscodeCache,
+      'syntaxes/protos.tmLanguage.json',
     ),
     'utf8',
   ),
