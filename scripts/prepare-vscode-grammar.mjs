@@ -31,8 +31,8 @@ const configuredCache = process.env.PROTOS_VSCODE_SOURCE_CACHE;
 const cache = configuredCache
   ? (isAbsolute(configuredCache)
       ? configuredCache
-      : resolve(root, configuredCache))
-  : join(root, '.protos-vscode-source');
+      : resolve(configuredCache))
+  : '/tmp/protos-website-vscode-source';
 
 const marker = join(cache, '.protos-vscode-revision');
 const grammar = join(cache, 'syntaxes/protos.tmLanguage.json');

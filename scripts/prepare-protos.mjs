@@ -62,8 +62,8 @@ if (
 
 const configuredCache = process.env.PROTOS_SOURCE_CACHE;
 const cache = configuredCache
-  ? (isAbsolute(configuredCache) ? configuredCache : resolve(root, configuredCache))
-  : join(root, '.protos-source');
+  ? (isAbsolute(configuredCache) ? configuredCache : resolve(configuredCache))
+  : '/tmp/protos-website-protos-source';
 const marker = join(cache, '.protos-revision');
 const checkOnly = process.argv.includes('--check');
 

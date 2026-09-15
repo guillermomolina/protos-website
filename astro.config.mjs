@@ -9,7 +9,7 @@ const protosVscodeCache = configuredProtosVscodeCache
   ? (isAbsolute(configuredProtosVscodeCache)
       ? configuredProtosVscodeCache
       : resolve(configuredProtosVscodeCache))
-  : resolve('.protos-vscode-source');
+  : resolve('/tmp/protos-website-vscode-source');
 const canonicalProtosGrammar = JSON.parse(
   readFileSync(
     resolve(
