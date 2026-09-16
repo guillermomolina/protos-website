@@ -8,9 +8,15 @@ semantics or maintained canonical language documentation.
 
 ## Authority boundary
 
-- `guillermomolina/protos` remains authoritative for language implementation,
-  specification, maintained guide material, tutorials, examples, and design
-  sources it owns.
+- `guillermomolina/protos` remains operational authority for formal Protos work
+  and authoritative for language implementation, specification, maintained guide
+  material, tutorials, examples, and design sources it owns.
+- `guillermomolina/protos/spec` remains normative language and Standard Library
+  authority.
+- Canonical durable, non-normative Protos project records live in
+  `guillermomolina/protos-project-docs:docs/project/**`.
+- Website-local implementation, content presentation, deployment behavior, and
+  website-local Issues remain owned by this repository.
 - This repository may curate, render, index, style, navigate, and deploy those
   sources from the exact revision recorded in `protos-source.lock.json`.
 - Generated/materialized canonical Protos inputs must not be committed as a
@@ -22,6 +28,12 @@ semantics or maintained canonical language documentation.
 - This repository may adapt renderer registration metadata but must not maintain
   an independent Protos grammar.
 - Website work must not silently redefine Protos semantics.
+- Formal Protos work coordinated from `guillermomolina/protos` must not be
+  duplicated as an independent formal lifecycle here. When such work requires a
+  durable project record, that record belongs in
+  `guillermomolina/protos-project-docs`; website source, generated site
+  artifacts, deployment evidence, and website-local documentation remain in this
+  repository unless separately governed.
 
 ## Architecture
 
