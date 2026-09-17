@@ -14,7 +14,9 @@
     "dev": "astro dev --host 0.0.0.0",
     "prebuild": "npm run prepare:protos",
     "build": "astro build",
-    "preview": "astro preview --host 0.0.0.0"
+    "preview": "astro preview --host 0.0.0.0",
+    "release:check": "node scripts/check-protos-release.mjs",
+    "check": "npm run source:check && npm run release:check"
   },
   "dependencies": {
     "@astrojs/starlight": "0.42.0",

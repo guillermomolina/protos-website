@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "repository": "guillermomolina/protos",
+  "version": "0.3.0",
+  "tag": "v0.3.0",
+  "releaseUrl": "https://github.com/guillermomolina/protos/releases/tag/v0.3.0",
+  "portableAsset": "protos-0.3.0-posix-jvm.zip",
+  "prerelease": true
+}

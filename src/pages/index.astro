@@ -1,6 +1,7 @@
 ---
 import '../styles/home.css';
 import protosNews from '../generated/protos-news.json';
+import protosRelease from '../../protos-release.lock.json';
 
 const brandLogo = '/protos-branding/protos-logo.png';
 
@@ -37,7 +38,8 @@ const principles = [
 ];
 
 const canonicalRepository = 'https://github.com/guillermomolina/protos';
-const releasePage = 'https://github.com/guillermomolina/protos/releases/tag/v0.2.236';
+const releasePage = protosRelease.releaseUrl;
+const releaseVersion = protosRelease.version;
 const canonicalSite = 'https://protos.guillermomolina.com/';
 const socialImage = 'https://protos.guillermomolina.com/icon-512x512.png';
 const socialDescription =
@@ -127,11 +129,11 @@ const socialDescription =
             <div class="maturity" aria-label="Project maturity">
               <span>Core language: v0.1 draft</span>
               <span>Reference implementation: active development</span>
-              <span>Portable pre-release: 0.2.236</span>
+              <span>Portable pre-release: {releaseVersion}</span>
             </div>
 
             <div class="hero-actions">
-              <a class="button primary" href={releasePage} rel="noreferrer">Download 0.2.236</a>
+              <a class="button primary" href={releasePage} rel="noreferrer">Download {releaseVersion}</a>
               <a class="button secondary" href="/learn/getting-started/">Get started</a>
               <a class="text-action" href={canonicalRepository}>View on GitHub →</a>
             </div>
