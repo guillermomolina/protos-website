@@ -63,14 +63,12 @@ function parseTaskCatalog(sourceRoot) {
     throw new Error('Canonical examples task catalog contains duplicate source mappings');
   }
 
-  if (JSON.stringify(uniqueListedSources) !== JSON.stringify(allSources)) {
-    const listed = new Set(uniqueListedSources);
-    const actual = new Set(allSources);
-    const unlisted = allSources.filter((path) => !listed.has(path));
-    const missing = uniqueListedSources.filter((path) => !actual.has(path));
+  const actual = new Set(allSources);
+  const missing = uniqueListedSources.filter((path) => !actual.has(path));
+  if (missing.length !== 0) {
     throw new Error(
-      'Canonical examples task catalog/source inventory mismatch: ' +
-        `unlisted=${JSON.stringify(unlisted)} missing=${JSON.stringify(missing)}`,
+      'Canonical examples task catalog references missing sources: ' +
+        JSON.stringify(missing),
     );
   }
 

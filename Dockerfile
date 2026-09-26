@@ -16,7 +16,7 @@ ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}"
 
 WORKDIR /workspace
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci && chown -R node:node /workspace/node_modules
 COPY . .
 
 ENV PROTOS_SOURCE_CACHE=/tmp/protos-source

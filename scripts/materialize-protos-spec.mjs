@@ -314,6 +314,7 @@ function generatedRoots(root) {
   return [
     'specification',
     'grammar',
+    'changelog',
     'semantics',
     'concurrency',
     'io',
