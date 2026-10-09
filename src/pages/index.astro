@@ -40,6 +40,11 @@ const principles = [
 const canonicalRepository = 'https://github.com/guillermomolina/protos';
 const releasePage = protosRelease.releaseUrl;
 const releaseVersion = protosRelease.version;
+const releaseDownload = (asset) =>
+  `https://github.com/${protosRelease.repository}/releases/download/` +
+  `${protosRelease.tag}/${asset}`;
+const nativeDownload = releaseDownload(protosRelease.nativeAsset);
+const portableDownload = releaseDownload(protosRelease.portableAsset);
 const canonicalSite = 'https://protos.guillermomolina.com/';
 const socialImage = 'https://protos.guillermomolina.com/icon-512x512.png';
 const socialDescription =
@@ -129,14 +134,28 @@ const socialDescription =
             <div class="maturity" aria-label="Project maturity">
               <span>Core language: v0.1 draft</span>
               <span>Reference implementation: active development</span>
-              <span>Portable pre-release: {releaseVersion}</span>
+              <span>Pre-release: {releaseVersion}</span>
             </div>
 
             <div class="hero-actions">
-              <a class="button primary" href={releasePage} rel="noreferrer">Download {releaseVersion}</a>
+              <a class="button primary" href={nativeDownload} rel="noreferrer">Download {releaseVersion} for Linux x86_64</a>
               <a class="button secondary" href="/learn/getting-started/">Get started</a>
-              <a class="text-action" href={canonicalRepository}>View on GitHub →</a>
+              <a class="text-action" href={releasePage} rel="noreferrer">Release notes and checksums →</a>
             </div>
+
+            <ul class="release-notes" aria-label="Download options">
+              <li>
+                <strong>Native</strong> (recommended): Linux x86_64 with glibc
+                2.39 or newer, no external JDK required. Runs Protos
+                interpreted, without guest JIT compilation.
+              </li>
+              <li>
+                <strong>Portable JVM</strong>:
+                <a href={portableDownload} rel="noreferrer">{protosRelease.portableAsset}</a>
+                for GraalVM 25.4.4.1.1 (JDK 25.0.4.1.1).
+              </li>
+              <li>Core language v0.1 remains experimental.</li>
+            </ul>
           </div>
 
           <div class="code-panel" aria-label="Protos delegation example">

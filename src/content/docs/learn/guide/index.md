@@ -25,6 +25,37 @@ disagree, the specification wins.
 9. [Isolated parallel execution](/learn/guide/09-isolated-parallel-execution/)
 10. [Actors, ActorRefs, and Actor Groups](/learn/guide/10-actors-actorrefs-and-groups/)
 11. [Process, I/O, Filesystems, and Authority](/learn/guide/11-process-io-filesystems-and-authority/)
+    — including what each launcher grants and Filesystem/Network examples
+12. [Protocol-first matching and case selection](/learn/guide/12-matching-expressions/)
+
+To install and run Protos first, start with
+[Try Protos](/learn/getting-started/).
+
+## Toolchain guides
+
+- [Bundled Tools](/learn/guide/tools/)
+- [The `protos` command line](/learn/guide/tools/cli/)
+- [Language server](/learn/guide/tools/language-server/)
+- [Package Tool](/learn/guide/tools/package-tool/)
+- [Test Tool](/learn/guide/tools/test-tool/)
+
+## Standard Library guides
+
+- [Standard Library overview](/learn/guide/library/)
+- [Regular expressions](/learn/guide/library/regex/)
+- [Dates, times, and durations](/learn/guide/library/datetime/)
+- [Structured logging](/learn/guide/library/logging/)
+- [Text styling and encodings](/learn/guide/library/text/)
+- [Semantic versions](/learn/guide/library/semver/)
+- [Explicit foreign operations](/learn/guide/library/interop/)
+
+## Java integration guides
+
+- [Embedding Protos in a Java application](/learn/guide/embedding/java/)
+- [Supplying application modules from Java](/learn/guide/embedding/application-modules/)
+- [Foreign interoperability](/learn/guide/interop/)
+- [Writing and registering an external provider](/learn/guide/interop/custom-provider/)
+- [The `java:` provider fixture](/learn/guide/interop/java-provider/)
 
 The canonical [source-style guide](/learn/guide/source-style/) is rendered by
 the same exact-revision pipeline.

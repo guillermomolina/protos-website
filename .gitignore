@@ -15,6 +15,8 @@
 # The curated guide index stays tracked; canonical chapter/style copies do not.
 /src/content/docs/learn/guide/[0-9][0-9]-*.md
 /src/content/docs/learn/guide/source-style.md
+# Generated guide topic sections (tools, library, embedding, interop, ...).
+/src/content/docs/learn/guide/*/
 
 # Generated tutorial group pages rendered from exact-SHA executable sources.
 # The curated tutorials index stays tracked; generated groups do not.

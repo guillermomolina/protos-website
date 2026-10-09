@@ -56,16 +56,19 @@ if (current.html_url !== lock.releaseUrl) {
   );
 }
 
-const asset = current.assets.find(
-  (candidate) => candidate.name === lock.portableAsset,
-);
+// `nativeAsset` is optional so older single-asset locks remain valid.
+const lockedAssets = [
+  ['Portable', lock.portableAsset],
+  ...(lock.nativeAsset ? [['Native', lock.nativeAsset]] : []),
+];
 
-if (!asset) {
-  throw new Error(
-    `Portable release asset not found: ${lock.portableAsset}`,
-  );
+for (const [kind, name] of lockedAssets) {
+  if (!current.assets.some((candidate) => candidate.name === name)) {
+    throw new Error(`${kind} release asset not found: ${name}`);
+  }
 }
 
 console.log(
-  `PROTOS_RELEASE_CHECK: PASS tag=${lock.tag} asset=${lock.portableAsset}`,
+  `PROTOS_RELEASE_CHECK: PASS tag=${lock.tag} ` +
+    lockedAssets.map(([, name]) => `asset=${name}`).join(' '),
 );

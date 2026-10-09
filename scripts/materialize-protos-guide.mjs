@@ -7,29 +7,59 @@ import {
   rmSync,
   writeFileSync,
 } from 'node:fs';
-import { join, posix } from 'node:path';
+import { dirname, join, posix } from 'node:path';
 
 const NUMBERED_GUIDE_RE = /^\d{2}-[a-z0-9-]+\.md$/;
 const GENERATED_OUTPUT_RE = /^(?:\d{2}-[a-z0-9-]+|source-style)\.md$/;
+const SECTION_RE = /^[a-z0-9-]+$/;
+const SECTION_PAGE_RE = /^(?:README|[a-z0-9-]+)\.md$/;
 const SOURCE_STYLE = 'SOURCE_STYLE.md';
 const TRY_PROTOS = '00-try-protos.md';
+
+// Guide pages are identified by their path relative to docs/guide: top-level
+// numbered chapters and SOURCE_STYLE.md, plus the Markdown pages of one level
+// of topic sections such as `tools/cli.md` or `embedding/java.md`.
+function isGuidePage(relativePath) {
+  const parts = relativePath.split('/');
+  if (parts.length === 1) {
+    return NUMBERED_GUIDE_RE.test(parts[0]) || parts[0] === SOURCE_STYLE;
+  }
+  return (
+    parts.length === 2 &&
+    SECTION_RE.test(parts[0]) &&
+    SECTION_PAGE_RE.test(parts[1])
+  );
+}
 
 function sourceGuideFiles(cache) {
   const directory = join(cache, 'docs/guide');
   if (!existsSync(directory)) return [];
-  return readdirSync(directory)
-    .filter((name) => NUMBERED_GUIDE_RE.test(name) || name === SOURCE_STYLE)
-    .sort();
+  const files = [];
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    if (entry.isFile() && isGuidePage(entry.name)) {
+      files.push(entry.name);
+    } else if (entry.isDirectory() && SECTION_RE.test(entry.name)) {
+      for (const name of readdirSync(join(directory, entry.name))) {
+        const relativePath = `${entry.name}/${name}`;
+        if (isGuidePage(relativePath)) files.push(relativePath);
+      }
+    }
+  }
+  return files.sort();
 }
 
 function outputName(sourceName) {
-  return sourceName === SOURCE_STYLE ? 'source-style.md' : sourceName;
+  if (sourceName === SOURCE_STYLE) return 'source-style.md';
+  if (sourceName.endsWith('/README.md')) {
+    return sourceName.replace(/README\.md$/, 'index.md');
+  }
+  return sourceName;
 }
 
 function outputRoute(sourceName) {
   if (sourceName === 'README.md') return '/learn/guide/';
   if (sourceName === TRY_PROTOS) return '/learn/getting-started/';
-  const name = outputName(sourceName).replace(/\.md$/, '');
+  const name = outputName(sourceName).replace(/(?:\/index)?\.md$/, '');
   return `/learn/guide/${name}/`;
 }
 
@@ -58,7 +88,7 @@ function isExternalOrSiteAbsolute(target) {
   );
 }
 
-function rewriteRelativeTarget(target, lock) {
+function rewriteRelativeTarget(target, lock, sourceName) {
   if (!target || isExternalOrSiteAbsolute(target)) return target;
 
   let wrapped = false;
@@ -72,7 +102,9 @@ function rewriteRelativeTarget(target, lock) {
   const { pathname, suffix } = splitPathSuffix(value);
   if (!pathname) return target;
 
-  const canonical = posix.normalize(posix.join('docs/guide', pathname));
+  const canonical = posix.normalize(
+    posix.join(posix.dirname(`docs/guide/${sourceName}`), pathname),
+  );
   if (canonical === '..' || canonical.startsWith('../')) {
     throw new Error(`Guide link escapes canonical repository root: ${target}`);
   }
@@ -83,9 +115,9 @@ function rewriteRelativeTarget(target, lock) {
   }
 
   if (canonical.startsWith('docs/guide/')) {
-    const basename = posix.basename(canonical);
-    if (NUMBERED_GUIDE_RE.test(basename) || basename === SOURCE_STYLE) {
-      const rewritten = `${outputRoute(basename)}${suffix}`;
+    const relativePath = canonical.slice('docs/guide/'.length);
+    if (relativePath === TRY_PROTOS || isGuidePage(relativePath)) {
+      const rewritten = `${outputRoute(relativePath)}${suffix}`;
       return wrapped ? `<${rewritten}>` : rewritten;
     }
   }
@@ -113,35 +145,35 @@ function rewriteRelativeTarget(target, lock) {
   return wrapped ? `<${rewritten}>` : rewritten;
 }
 
-function rewriteMarkdownDestination(raw, lock) {
+function rewriteMarkdownDestination(raw, lock, sourceName) {
   const match = raw.match(/^(<[^>]+>|\S+)(\s+.*)?$/s);
   if (!match) return raw;
-  return `${rewriteRelativeTarget(match[1], lock)}${match[2] ?? ''}`;
+  return `${rewriteRelativeTarget(match[1], lock, sourceName)}${match[2] ?? ''}`;
 }
 
-function rewriteProseLine(line, lock) {
+function rewriteProseLine(line, lock, sourceName) {
   let rewritten = line.replace(
     /(!?\[[^\]]*\]\()([^)]+)(\))/g,
     (_match, prefix, destination, suffix) =>
-      `${prefix}${rewriteMarkdownDestination(destination, lock)}${suffix}`,
+      `${prefix}${rewriteMarkdownDestination(destination, lock, sourceName)}${suffix}`,
   );
 
   rewritten = rewritten.replace(
     /^(\s*\[[^\]]+\]:\s*)(\S+)(.*)$/g,
     (_match, prefix, destination, suffix) =>
-      `${prefix}${rewriteRelativeTarget(destination, lock)}${suffix}`,
+      `${prefix}${rewriteRelativeTarget(destination, lock, sourceName)}${suffix}`,
   );
 
   rewritten = rewritten.replace(
     /\b(src|href)="([^"]+)"/g,
     (_match, attribute, destination) =>
-      `${attribute}="${rewriteRelativeTarget(destination, lock)}"`,
+      `${attribute}="${rewriteRelativeTarget(destination, lock, sourceName)}"`,
   );
 
   return rewritten;
 }
 
-function rewriteLinksOutsideFences(source, lock) {
+function rewriteLinksOutsideFences(source, lock, sourceName) {
   const lines = source.split('\n');
   let fence = null;
 
@@ -159,7 +191,7 @@ function rewriteLinksOutsideFences(source, lock) {
       }
 
       if (fence !== null) return line;
-      return rewriteProseLine(line, lock);
+      return rewriteProseLine(line, lock, sourceName);
     })
     .join('\n');
 }
@@ -191,7 +223,7 @@ export function transformGuideMarkdown(source, sourceName, lock) {
     `https://github.com/guillermomolina/protos/blob/${lock.revision}/` +
     canonicalPath;
 
-  const rewrittenBody = rewriteLinksOutsideFences(body, lock);
+  const rewrittenBody = rewriteLinksOutsideFences(body, lock, sourceName);
   const titleJson = JSON.stringify(title);
 
   return `---
@@ -240,9 +272,17 @@ function expectedGettingStartedPage({ cache, lock }) {
 
 function currentGeneratedNames(outputDirectory) {
   if (!existsSync(outputDirectory)) return [];
-  return readdirSync(outputDirectory)
-    .filter((name) => GENERATED_OUTPUT_RE.test(name))
-    .sort();
+  const names = [];
+  for (const entry of readdirSync(outputDirectory, { withFileTypes: true })) {
+    if (entry.isFile() && GENERATED_OUTPUT_RE.test(entry.name)) {
+      names.push(entry.name);
+    } else if (entry.isDirectory()) {
+      for (const name of readdirSync(join(outputDirectory, entry.name))) {
+        names.push(`${entry.name}/${name}`);
+      }
+    }
+  }
+  return names.sort();
 }
 
 export function protosGuideMatchesSource({ root, cache, lock }) {
@@ -301,6 +341,7 @@ export function materializeProtosGuide({ root, cache, lock }) {
 
   for (const [name, content] of expected) {
     const output = join(outputDirectory, name);
+    mkdirSync(dirname(output), { recursive: true });
     const temporary = `${output}.tmp-${process.pid}`;
     rmSync(temporary, { force: true });
     writeFileSync(temporary, content, 'utf8');
@@ -316,6 +357,13 @@ export function materializeProtosGuide({ root, cache, lock }) {
   for (const name of currentGeneratedNames(outputDirectory)) {
     if (!expectedNames.has(name)) {
       rmSync(join(outputDirectory, name), { force: true });
+    }
+  }
+
+  for (const entry of readdirSync(outputDirectory, { withFileTypes: true })) {
+    const directory = join(outputDirectory, entry.name);
+    if (entry.isDirectory() && readdirSync(directory).length === 0) {
+      rmSync(directory, { recursive: true, force: true });
     }
   }
 

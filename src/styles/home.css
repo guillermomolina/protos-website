@@ -611,3 +611,16 @@ footer {
     justify-content: center;
   }
 }
+
+.release-notes {
+  margin: 1.25rem 0 0;
+  padding-left: 1.1rem;
+  max-width: 38rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.release-notes li + li {
+  margin-top: 0.35rem;
+}
