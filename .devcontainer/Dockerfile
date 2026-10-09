@@ -1,6 +1,6 @@
-FROM node:22.23.2-bookworm AS node-runtime
+FROM docker.io/library/node:22.23.2-bookworm AS node-runtime
 
-FROM maven:3.9.16-eclipse-temurin-21
+FROM docker.io/library/maven:3.9.16-eclipse-temurin-21
 
 COPY --from=node-runtime /usr/local /usr/local
 
