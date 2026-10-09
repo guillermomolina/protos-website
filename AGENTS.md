@@ -74,6 +74,8 @@ WEB001-B ratified, with its original hosting component superseded by WEB001-F:
 - Do not repair unrelated caller state.
 - Stage files explicitly; do not use `git add -A` in automated publication.
 - Do not force-push.
+- Commit messages are a single line: no body and no AI attribution trailers
+  (no `Co-Authored-By`, "Generated with", or similar).
 - Pin third-party GitHub Actions to immutable full commit SHAs.
 - Keep dependency locks committed.
 - Treat `tmp` as repository-local scratch; it may be a symlink and must remain
