@@ -1,0 +1,176 @@
+---
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Live development docs — Protos</title>
+  <style is:global>
+    body {
+      margin: 0; font: 15px system-ui, sans-serif;
+      background: #f5f9fb; color: #102f52;
+    }
+    header {
+      background: white; border-bottom: 1px solid #dbe5ec;
+      padding: 20px max(24px, calc((100vw - 1200px) / 2));
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    header img { width: 160px; }
+    a { color: #147985; }
+    main { max-width: 1200px; margin: auto; padding: 45px 24px; }
+    h1 { font-size: clamp(32px, 4vw, 52px); margin-bottom: 10px; }
+    .description { color: #5b6d7f; line-height: 1.65; }
+    [data-doc-identity] {
+      font: 12px ui-monospace, monospace;
+      overflow-wrap: anywhere; color: #597488;
+    }
+    .layout {
+      display: grid; grid-template-columns: 290px minmax(0, 1fr);
+      gap: 20px; margin-top: 30px; align-items: start;
+    }
+    aside, section {
+      background: white; border: 1px solid #dbe5ec;
+      border-radius: 12px; padding: 20px; min-width: 0;
+    }
+    label { display: block; margin: 0 0 7px; font-weight: 700; }
+    select, input {
+      box-sizing: border-box; width: 100%; padding: 10px;
+      margin-bottom: 17px; border: 1px solid #bed0dc;
+      border-radius: 6px; font: inherit;
+    }
+    ul { list-style: none; padding: 0; max-height: 65vh; overflow: auto; }
+    li button {
+      display: block; width: 100%; text-align: left; padding: 10px 3px;
+      background: transparent; border: 0;
+      border-bottom: 1px solid #e9eff3; cursor: pointer;
+      overflow-wrap: anywhere;
+    }
+    li button:hover { color: #147985; background: #eef8fa; }
+    section { min-height: 320px; }
+    section h2 { overflow-wrap: anywhere; }
+    section pre {
+      overflow: auto; padding: 20px; background: #0b1e31;
+      color: #dcecf3; border-radius: 8px; line-height: 1.6;
+    }
+    section code { white-space: pre; }
+    .live-doc-markdown {
+      margin-top: 24px;
+      color: #173653;
+      line-height: 1.75;
+      overflow-wrap: anywhere;
+    }
+    .live-doc-markdown :is(h1, h2, h3, h4, h5, h6) {
+      color: #102f52;
+      line-height: 1.35;
+      margin: 1.6em 0 0.65em;
+    }
+    .live-doc-markdown p { margin: 0.9em 0; }
+    .live-doc-markdown :is(ul, ol) {
+      list-style: revert;
+      padding-left: 1.7rem;
+      max-height: none;
+      overflow: visible;
+    }
+    .live-doc-markdown li { margin: 0.3em 0; }
+    .live-doc-markdown blockquote {
+      margin: 1.25em 0;
+      padding: 0.2em 1.2em;
+      border-left: 4px solid #147985;
+      background: #f3f8fa;
+    }
+    .live-doc-markdown table {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+      border-collapse: collapse;
+      margin: 1.25em 0;
+    }
+    .live-doc-markdown :is(th, td) {
+      border: 1px solid #ccdae3;
+      padding: 8px 12px;
+      text-align: left;
+      min-width: 90px;
+    }
+    .live-doc-markdown th { background: #edf5f8; }
+    .live-doc-markdown pre {
+      max-width: 100%;
+      overflow-x: auto;
+      font-size: 13px;
+    }
+    .live-doc-markdown pre code {
+      color: inherit;
+      background: transparent;
+      white-space: pre;
+    }
+    .live-doc-markdown :not(pre) > code {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: #edf3f7;
+      color: #173653;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    .live-doc-markdown a {
+      text-decoration: underline;
+      overflow-wrap: anywhere;
+    }
+    footer { margin-top: 24px; color: #5b6d7f; font-size: 13px; }
+    @media (max-width: 760px) {
+      .layout { grid-template-columns: 1fr; }
+      ul { max-height: 240px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/">
+      <img src="/protos-branding/protos-logo.png" alt="Protos" />
+    </a>
+    <a href="/reference/">Static reference</a>
+  </header>
+  <main>
+    <h1>Live development documentation</h1>
+    <p class="description">
+      Canonical Protos documents from one exact Git revision.
+      Markdown is rendered with sanitization; Protos code remains inert.
+    </p>
+    <p data-doc-identity>Resolving revision…</p>
+    <div class="layout">
+      <aside>
+        <label for="family">Family</label>
+        <select id="family" data-doc-family>
+          <option value="all">All families</option>
+          <option value="spec">Specification</option>
+          <option value="guide">Guides</option>
+          <option value="tutorials">Tutorials</option>
+          <option value="examples">Examples</option>
+          <option value="library">Standard Library Source</option>
+        </select>
+        <label for="filter">Filter documents</label>
+        <input id="filter" type="search" data-doc-filter />
+        <ul data-doc-list></ul>
+      </aside>
+      <section>
+        <p role="status" aria-live="polite" data-doc-status>
+          Loading catalog…
+        </p>
+        <div data-doc-body></div>
+      </section>
+    </div>
+    <footer>
+      Source authority:
+      <a href="https://github.com/guillermomolina/protos">
+        guillermomolina/protos
+      </a>.
+      Existing formatted documentation remains available.
+    </footer>
+  </main>
+  <script>
+    import { mountLiveDocs } from '../../scripts/live-docs-ui.js';
+    void mountLiveDocs(document, window.fetch.bind(window), window);
+  </script>
+</body>
+</html>

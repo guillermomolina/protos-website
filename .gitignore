@@ -52,3 +52,6 @@
 # Local/editor noise
 .DS_Store
 npm-debug.log*
+
+# Generated from the exact locked VS Code TextMate grammar.
+/src/scripts/generated/protos-grammar.js

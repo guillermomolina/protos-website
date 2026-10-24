@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "kind": "protos-d064-publications",
+  "repository": "guillermomolina/protos",
+  "activeRevision": "14558fd9ea6758698ae4a8d4d38a273438212176",
+  "publications": [
+    {
+      "schemaVersion": 1,
+      "kind": "protos-d064-oci-lock",
+      "sourceRevision": "14558fd9ea6758698ae4a8d4d38a273438212176",
+      "d064ContentSha256": "236597164f28f3d735ea329a9b20fbe348f7628347cc1e3e498d1650a12e80e9",
+      "d064ManifestDigest": "sha256:19b27bb39e2321333ec570631a821e8d43c2d4c4c98c6cfd9c8150879418bc4e"
+    }
+  ]
+}

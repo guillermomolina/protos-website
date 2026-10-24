@@ -14,12 +14,10 @@ mirror issue state or design conversations.
 
 ## News and milestones
 
-Major public project milestones are preserved in the canonical, versioned
-[`docs/news/`](https://github.com/guillermomolina/protos/tree/302f1b521ca5121bd2e69d33c4a902e02e1d138e/docs/news) archive and rendered here from the exact Protos revision selected
-by this website. [Browse News and milestones](/community/news/).
-
-GitHub Discussions / Announcements remains the live conversation and reaction
-surface; the website does not mirror Discussion comments or state.
+Official Protos announcements are published in [GitHub Discussions — Announcements](https://github.com/guillermomolina/protos/discussions/categories/announcements).
+The homepage displays recent announcements dynamically from that source, without
+maintaining a versioned Markdown archive in the website. GitHub Discussions is
+the canonical news archive and the place to read or react to announcements.
 
 ## Make your first contribution
 

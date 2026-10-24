@@ -7,7 +7,7 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "prepare:protos": "node scripts/prepare-protos.mjs && node scripts/prepare-vscode-grammar.mjs",
+    "prepare:protos": "node scripts/prepare-protos.mjs && node scripts/prepare-vscode-grammar.mjs && node scripts/materialize-protos-browser-grammar.mjs",
     "source:check": "node scripts/prepare-protos.mjs --check && node scripts/prepare-vscode-grammar.mjs --check",
     "source:update": "node scripts/update-protos-source.mjs",
     "predev": "npm run prepare:protos",
@@ -20,7 +20,15 @@
   },
   "dependencies": {
     "@astrojs/starlight": "0.42.0",
-    "astro": "7.3.2"
+    "@shikijs/themes": "4.4.3",
+    "astro": "7.3.2",
+    "rehype-sanitize": "6.0.0",
+    "rehype-stringify": "10.0.1",
+    "remark-gfm": "4.0.1",
+    "remark-parse": "11.0.0",
+    "remark-rehype": "11.1.2",
+    "shiki": "4.4.3",
+    "unified": "11.0.5"
   },
   "allowScripts": {
     "esbuild@0.28.2": true

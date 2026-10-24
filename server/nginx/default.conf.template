@@ -1,0 +1,147 @@
+# WEB011-B: shared read-only GitHub content cache.
+# This file is included in nginx's http context.
+js_shared_dict_zone zone=protos_content:2m timeout=24h;
+js_shared_dict_zone zone=protos_documents:8m timeout=24h evict;
+js_import release from /etc/nginx/njs/github-release.js;
+js_import news from /etc/nginx/njs/github-announcements.js;
+js_import project from /etc/nginx/njs/github-project-status.js;
+js_import docsRevision from /etc/nginx/njs/github-document-revision.js;
+js_import docsCatalog from /etc/nginx/njs/github-document-catalog.js;
+js_import docsDocument from /etc/nginx/njs/github-document.js;
+js_import docsD064 from /etc/nginx/njs/ghcr-d064.js;
+
+server {
+    listen 8080;
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # DNS addresses are supplied by the existing NGINX entrypoint.
+    resolver ${NGINX_LOCAL_RESOLVERS} valid=300s ipv6=off;
+    resolver_timeout 5s;
+
+    location = /api/live/release {
+        limit_except GET {
+            deny all;
+        }
+
+        js_fetch_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
+        js_fetch_verify on;
+        js_fetch_protocols TLSv1.2 TLSv1.3;
+        js_fetch_timeout 5s;
+        js_fetch_max_response_buffer_size 512k;
+
+        js_content release.release;
+    }
+
+    # Preserve static Astro/Starlight routing.
+    location = /api/live/news {
+        limit_except GET {
+            deny all;
+        }
+
+        js_fetch_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
+        js_fetch_verify on;
+        js_fetch_protocols TLSv1.2 TLSv1.3;
+        js_fetch_timeout 5s;
+        js_fetch_max_response_buffer_size 2m;
+
+        js_content news.news;
+    }
+
+    # Preserve static Astro/Starlight routing.
+
+    # WEB011-C2: bounded read-only GitHub project signals.
+    location = /api/live/issues {
+        limit_except GET {
+            deny all;
+        }
+
+        js_fetch_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
+        js_fetch_verify on;
+        js_fetch_protocols TLSv1.2 TLSv1.3;
+        js_fetch_timeout 5s;
+        js_fetch_max_response_buffer_size 1m;
+
+        js_content project.issues;
+    }
+
+    location = /api/live/actions {
+        limit_except GET {
+            deny all;
+        }
+
+        js_fetch_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
+        js_fetch_verify on;
+        js_fetch_protocols TLSv1.2 TLSv1.3;
+        js_fetch_timeout 5s;
+        js_fetch_max_response_buffer_size 1m;
+
+        js_content project.actions;
+    }
+
+    # WEB011-D5B2-C3-B: active, exact-X/H/M D064 publication.
+    location = /api/live/docs/d064 {
+        limit_except GET {
+            deny all;
+        }
+
+        js_fetch_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
+        js_fetch_verify on;
+        js_fetch_protocols TLSv1.2 TLSv1.3;
+        js_fetch_timeout 5s;
+        js_fetch_max_response_buffer_size 3m;
+
+        js_content docsD064.document;
+    }
+
+    # WEB011-D4D2-B: exact-revision canonical document content.
+    location = /api/live/docs/document {
+        limit_except GET {
+            deny all;
+        }
+
+        js_fetch_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
+        js_fetch_verify on;
+        js_fetch_protocols TLSv1.2 TLSv1.3;
+        js_fetch_timeout 5s;
+        js_fetch_max_response_buffer_size 512k;
+
+        js_content docsDocument.document;
+    }
+
+    # WEB011-D3: fixed server-side selector for development documentation.
+    # WEB011-D4D1: server-selected development catalog.
+    location = /api/live/docs/catalog {
+        limit_except GET {
+            deny all;
+        }
+
+        js_fetch_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
+        js_fetch_verify on;
+        js_fetch_protocols TLSv1.2 TLSv1.3;
+        js_fetch_timeout 5s;
+        js_fetch_max_response_buffer_size 2m;
+
+        js_content docsCatalog.catalog;
+    }
+
+    location = /api/live/docs/development {
+        limit_except GET {
+            deny all;
+        }
+
+        js_fetch_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
+        js_fetch_verify on;
+        js_fetch_protocols TLSv1.2 TLSv1.3;
+        js_fetch_timeout 5s;
+        js_fetch_max_response_buffer_size 2m;
+
+        js_content docsRevision.development;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

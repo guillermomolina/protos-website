@@ -1,14 +1,11 @@
 ---
 import '../styles/home.css';
-import protosNews from '../generated/protos-news.json';
 import protosRelease from '../../protos-release.lock.json';
 
 const brandLogo = '/protos-branding/protos-logo.png';
 
-const latestNews = protosNews.entries.slice(0, 3);
-
 const navigation = [
-  { label: 'Learn', href: '/learn/' },
+  { label: 'Learn', href: '/docs/live/' },
   { label: 'Reference', href: '/reference/' },
   { label: 'Design', href: '/design/' },
   { label: 'Community', href: '/community/' },
@@ -134,13 +131,13 @@ const socialDescription =
             <div class="maturity" aria-label="Project maturity">
               <span>Core language: v0.1 draft</span>
               <span>Reference implementation: active development</span>
-              <span>Pre-release: {releaseVersion}</span>
+              <span data-live-release="version" data-release-current={releaseVersion} aria-live="polite">Pre-release: {releaseVersion}</span>
             </div>
 
             <div class="hero-actions">
-              <a class="button primary" href={nativeDownload} rel="noreferrer">Download {releaseVersion} for Linux x86_64</a>
-              <a class="button secondary" href="/learn/getting-started/">Get started</a>
-              <a class="text-action" href={releasePage} rel="noreferrer">Release notes and checksums →</a>
+              <a class="button primary" data-live-release="native" href={nativeDownload} rel="noreferrer">Download {releaseVersion} for Linux x86_64</a>
+              <a class="button secondary" href="/docs/live/">Get started</a>
+              <a class="text-action" data-live-release="notes" href={releasePage} rel="noreferrer">Release notes and checksums →</a>
             </div>
 
             <ul class="release-notes" aria-label="Download options">
@@ -151,7 +148,7 @@ const socialDescription =
               </li>
               <li>
                 <strong>Portable JVM</strong>:
-                <a href={portableDownload} rel="noreferrer">{protosRelease.portableAsset}</a>
+                <a data-live-release="portable" href={portableDownload} rel="noreferrer">{protosRelease.portableAsset}</a>
                 for GraalVM 25.4.4.1.1 (JDK 25.0.4.1.1).
               </li>
               <li>Core language v0.1 remains experimental.</li>
@@ -231,26 +228,83 @@ dog.<span class="syntax-call">speak</span>()</code></pre>
             <p class="eyebrow">Project milestones</p>
             <h2 id="latest-news-title">Latest news.</h2>
             <p>
-              Durable project milestones rendered from the exact Protos source
-              revision selected by this website.
+              Official announcements from GitHub Discussions, updated
+              automatically without rebuilding this website.
             </p>
           </div>
 
-          <div class="news-grid">
-            {
-              latestNews.map((entry) => (
-                <article class="news-card">
-                  <p class="news-date">{entry.date}</p>
-                  <h3><a href={entry.href}>{entry.title}</a></h3>
-                  <p>{entry.summary}</p>
-                </article>
-              ))
-            }
+          <p data-live-news="status" role="status">
+            Latest announcements are available on GitHub Discussions.
+          </p>
+          <div
+            class="news-grid"
+            data-live-news="cards"
+            aria-live="polite"
+          ></div>
+
+          <a
+            class="news-archive-link"
+            href="https://github.com/guillermomolina/protos/discussions/categories/announcements"
+            rel="noreferrer"
+          >
+            Browse all announcements on GitHub →
+          </a>
+        </div>
+      </section>
+
+      <section class="project-activity" aria-labelledby="project-activity-title">
+        <div class="shell">
+          <div class="section-heading project-activity-heading">
+            <p class="eyebrow">GitHub project activity</p>
+            <h2 id="project-activity-title">Active development.</h2>
+            <p>
+              Recent open Issues and workflow runs. These are sampled
+              signals, not a changelog or a statement that the full
+              test suite passed.
+            </p>
           </div>
 
-          <a class="news-archive-link" href="/community/news/">
-            Browse all news and milestones →
-          </a>
+          <div class="project-activity-grid">
+            <article class="project-signal" aria-labelledby="project-issues-title">
+              <h3 id="project-issues-title">Recently updated open issues</h3>
+              <p
+                class="project-signal-state"
+                role="status"
+                aria-live="polite"
+                data-project-status-state="issues"
+              >Browse live issues on GitHub.</p>
+              <ul
+                class="project-signal-list"
+                data-project-status-list="issues"
+                hidden
+              ></ul>
+              <a
+                class="project-signal-more"
+                href="https://github.com/guillermomolina/protos/issues"
+                rel="noreferrer"
+              >View all issues on GitHub →</a>
+            </article>
+
+            <article class="project-signal" aria-labelledby="project-actions-title">
+              <h3 id="project-actions-title">Recent workflow runs</h3>
+              <p
+                class="project-signal-state"
+                role="status"
+                aria-live="polite"
+                data-project-status-state="actions"
+              >Browse workflow runs on GitHub.</p>
+              <ul
+                class="project-signal-list"
+                data-project-status-list="actions"
+                hidden
+              ></ul>
+              <a
+                class="project-signal-more"
+                href="https://github.com/guillermomolina/protos/actions"
+                rel="noreferrer"
+              >View GitHub Actions →</a>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -261,7 +315,7 @@ dog.<span class="syntax-call">speak</span>()</code></pre>
             <h2>Read, run, then go deeper.</h2>
           </div>
           <div class="next-actions">
-            <a href="/learn/">Learn</a>
+            <a href="/docs/live/">Learn</a>
             <a href="/reference/">Reference</a>
             <a href="/community/">Community</a>
           </div>
@@ -278,5 +332,15 @@ dog.<span class="syntax-call">speak</span>()</code></pre>
         <a href={canonicalRepository}>GitHub</a>
       </div>
     </footer>
+    <script>
+      import { refreshLiveRelease } from '../scripts/live-release.js';
+      import { refreshLiveNews } from '../scripts/live-news.js';
+
+      void refreshLiveRelease(document, fetch);
+      void refreshLiveNews(document, fetch);
+    </script>
+      <script>
+  import '../scripts/live-project-status.js';
+</script>
   </body>
 </html>
