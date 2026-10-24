@@ -4,13 +4,13 @@ title: "Protos Language Specification Changelog — 0.1.100–0.1.199"
 
 # Protos Language Specification Changelog — 0.1.100–0.1.199
 
-> **Canonical source:** [`spec/changelog/PROTOS_SPEC_CHANGELOG-0.1.100-0.1.199.md`](https://github.com/guillermomolina/protos/blob/751acb16a16318b7b8d1cec6d00338b9da3338ea/spec/changelog/PROTOS_SPEC_CHANGELOG-0.1.100-0.1.199.md) at locked
-> revision `751acb16a16318b7b8d1cec6d00338b9da3338ea`. The source document's own status and
+> **Canonical source:** [`spec/changelog/PROTOS_SPEC_CHANGELOG-0.1.100-0.1.199.md`](https://github.com/guillermomolina/protos/blob/e99b712ecf658a527b1fe82c8beba2c1286d8dc9/spec/changelog/PROTOS_SPEC_CHANGELOG-0.1.100-0.1.199.md) at locked
+> revision `e99b712ecf658a527b1fe82c8beba2c1286d8dc9`. The source document's own status and
 > authority declarations apply; this website rendering does not upgrade,
 > downgrade, or redefine them.
 
 
-Archived from [`../PROTOS_SPEC_CHANGELOG.md`](https://github.com/guillermomolina/protos/blob/751acb16a16318b7b8d1cec6d00338b9da3338ea/spec/PROTOS_SPEC_CHANGELOG.md).
+Archived from [`../PROTOS_SPEC_CHANGELOG.md`](https://github.com/guillermomolina/protos/blob/e99b712ecf658a527b1fe82c8beba2c1286d8dc9/spec/PROTOS_SPEC_CHANGELOG.md).
 
 ## [0.1.199] - 2026-09-03
 

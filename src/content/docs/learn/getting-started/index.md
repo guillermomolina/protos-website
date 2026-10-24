@@ -2,8 +2,8 @@
 title: "Try Protos"
 ---
 
-> **Canonical source:** [`docs/guide/00-try-protos.md`](https://github.com/guillermomolina/protos/blob/751acb16a16318b7b8d1cec6d00338b9da3338ea/docs/guide/00-try-protos.md) at locked
-> revision `751acb16a16318b7b8d1cec6d00338b9da3338ea`. This rendered page is non-normative; the
+> **Canonical source:** [`docs/guide/00-try-protos.md`](https://github.com/guillermomolina/protos/blob/e99b712ecf658a527b1fe82c8beba2c1286d8dc9/docs/guide/00-try-protos.md) at locked
+> revision `e99b712ecf658a527b1fe82c8beba2c1286d8dc9`. This rendered page is non-normative; the
 > applicable Protos specification remains authoritative.
 
 The recommended first-run artifact on the declared Native target is the
@@ -283,7 +283,7 @@ Once the first program runs:
   [official Protos VS Code extension](https://github.com/guillermomolina/protos-vscode-extension)
   for language and debugging integration.
 
-The normative language specification remains under [`../../spec/`](https://github.com/guillermomolina/protos/tree/751acb16a16318b7b8d1cec6d00338b9da3338ea/spec).
+The normative language specification remains under [`../../spec/`](https://github.com/guillermomolina/protos/tree/e99b712ecf658a527b1fe82c8beba2c1286d8dc9/spec).
 This guide explains how to get started with the published implementation; it
 does not redefine Protos language semantics.
 
