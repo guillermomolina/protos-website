@@ -104,6 +104,15 @@ export default defineConfig({
       favicon: '/favicon.ico',
       head: [
         {
+          tag: 'script',
+          attrs: {
+            defer: true,
+            src: 'https://stats.guillermomolina.com/script.js',
+            'data-website-id': '16bfc4d7-f72e-488e-b153-3466acf8d1c3',
+            'data-domains': 'protos.guillermomolina.com',
+          },
+        },
+        {
           tag: 'link',
           attrs: {
             rel: 'icon',
