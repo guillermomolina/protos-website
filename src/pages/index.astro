@@ -1,6 +1,6 @@
 ---
 import '../styles/home.css';
-import protosRelease from '../../protos-release.lock.json';
+import { nativeFirstRun, portableFirstRun } from '../scripts/release-onboarding.js';
 
 const brandLogo = '/protos-branding/protos-logo.png';
 
@@ -35,13 +35,7 @@ const principles = [
 ];
 
 const canonicalRepository = 'https://github.com/guillermomolina/protos';
-const releasePage = protosRelease.releaseUrl;
-const releaseVersion = protosRelease.version;
-const releaseDownload = (asset) =>
-  `https://github.com/${protosRelease.repository}/releases/download/` +
-  `${protosRelease.tag}/${asset}`;
-const nativeDownload = releaseDownload(protosRelease.nativeAsset);
-const portableDownload = releaseDownload(protosRelease.portableAsset);
+const releasesPage = `${canonicalRepository}/releases`;
 const canonicalSite = 'https://protos.guillermomolina.com/';
 const socialImage = 'https://protos.guillermomolina.com/icon-512x512.png';
 const socialDescription =
@@ -137,26 +131,23 @@ const socialDescription =
             <div class="maturity" aria-label="Project maturity">
               <span>Core language: v0.1 draft</span>
               <span>Reference implementation: active development</span>
-              <span data-live-release="version" data-release-current={releaseVersion} aria-live="polite">Pre-release: {releaseVersion}</span>
+              <span data-live-release="version" aria-live="polite">Latest published prerelease</span>
             </div>
 
             <div class="hero-actions">
-              <a class="button primary" data-live-release="native" href={nativeDownload} rel="noreferrer">Download {releaseVersion} for Linux x86_64</a>
-              <a class="button secondary" href="/docs/live/">Get started</a>
-              <a class="text-action" data-live-release="notes" href={releasePage} rel="noreferrer">Release notes and checksums →</a>
+              <a class="button primary" href="#try-protos">Try Protos</a>
+              <a class="button secondary" data-live-release="native"
+                 href={releasesPage}>Download Native</a>
+              <a class="text-action" data-live-release="notes"
+                 href={releasesPage}>Releases and checksums →</a>
             </div>
-
             <ul class="release-notes" aria-label="Download options">
-              <li>
-                <strong>Native</strong> (recommended): Linux x86_64 with glibc
-                2.39 or newer, no external JDK required. Runs Protos
-                interpreted, without guest JIT compilation.
-              </li>
-              <li>
-                <strong>Portable JVM</strong>:
-                <a data-live-release="portable" href={portableDownload} rel="noreferrer">{protosRelease.portableAsset}</a>
-                for GraalVM 25.4.4.1.1 (JDK 25.0.4.1.1).
-              </li>
+              <li>Native: Linux x86_64, no external JDK.
+                  Check the current release requirements.</li>
+              <li>Portable JVM:
+                  <a data-live-release="portable" href={releasesPage}>
+                    Download portable distribution
+                  </a>. Requires the supported external GraalVM/JDK.</li>
               <li>Core language v0.1 remains experimental.</li>
             </ul>
           </div>
@@ -184,6 +175,57 @@ dog.<span class="syntax-call">speak</span>()</code></pre>
               closure runs with <code>dog</code> as its receiver.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section id="try-protos" class="quickstart" aria-labelledby="try-title">
+        <div class="shell">
+          <div class="quickstart-heading">
+            <p class="eyebrow">Your first program</p>
+            <h2 id="try-title">Try Protos.</h2>
+            <p>Copy the commands below to download the latest published
+               prerelease from GitHub, verify it and run your first program.</p>
+            <p>Requires curl, Python 3, unzip and sha256sum.</p>
+          </div>
+          <div class="quickstart-grid">
+            <article class="quickstart-card">
+              <h3>Native Linux x86_64 — recommended</h3>
+              <p>No external JDK. Check the current release's glibc
+                 and CPU requirements. Guest JIT is unavailable.</p>
+              <p class="quickstart-links">
+                <a data-live-release="native-archive" href={releasesPage}>Download ZIP</a>
+                <a data-live-release="native-checksum" href={releasesPage}>SHA-256</a>
+              </p>
+              <div class="quickstart-toolbar">
+                <span>Terminal</span>
+                <div>
+                  <button type="button" data-copy-onboarding="native">Copy commands</button>
+                  <span data-copy-status role="status" aria-live="polite"></span>
+                </div>
+              </div>
+              <pre class="quickstart-terminal"><code data-first-run="native">{nativeFirstRun}</code></pre>
+            </article>
+            <article class="quickstart-card">
+              <h3>Portable JVM — compatibility fallback</h3>
+              <p>Requires the supported external GraalVM/JDK.
+                 Java is not bundled. Check the current release notes.</p>
+              <p class="quickstart-links">
+                <a data-live-release="portable-archive" href={releasesPage}>Download ZIP</a>
+                <a data-live-release="portable-checksum" href={releasesPage}>SHA-256</a>
+              </p>
+              <div class="quickstart-toolbar">
+                <span>Terminal</span>
+                <div>
+                  <button type="button" data-copy-onboarding="portable">Copy commands</button>
+                  <span data-copy-status role="status" aria-live="polite"></span>
+                </div>
+              </div>
+              <pre class="quickstart-terminal"><code data-first-run="portable">{portableFirstRun}</code></pre>
+              <p>Set <code>JAVA_HOME</code> to your supported GraalVM/JDK, or select that runtime using <code>PROTOS_JAVA</code> or <code>PATH</code>. The launcher checks <code>RUNTIME.txt</code>.</p>
+            </article>
+          </div>
+          <p class="quickstart-next">For VS Code, Dev Containers and further examples,
+             <a href="/docs/live/">explore the documentation</a>.</p>
         </div>
       </section>
 
@@ -340,8 +382,10 @@ dog.<span class="syntax-call">speak</span>()</code></pre>
     </footer>
     <script>
       import { refreshLiveRelease } from '../scripts/live-release.js';
+      import { wireOnboardingCopy } from '../scripts/release-onboarding.js';
       import { refreshLiveNews } from '../scripts/live-news.js';
 
+      wireOnboardingCopy(document);
       void refreshLiveRelease(document, fetch);
       void refreshLiveNews(document, fetch);
     </script>

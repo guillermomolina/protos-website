@@ -269,6 +269,92 @@ pre code {
   color: #dbe9ef;
 }
 
+
+/* WEB012: visible, version-independent first-run instructions */
+.quickstart {
+  padding: 4.5rem 0;
+  background: var(--wash);
+  scroll-margin-top: 90px;
+}
+.quickstart-heading { max-width: 750px; margin-bottom: 2rem; }
+.quickstart-heading h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -0.04em;
+}
+.quickstart-heading p, .quickstart-card p, .quickstart-next {
+  color: var(--muted);
+  line-height: 1.65;
+}
+.quickstart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.quickstart-card {
+  min-width: 0;
+  padding: 1.3rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+}
+.quickstart-card h3 { margin-bottom: 1rem; }
+.quickstart-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.quickstart-links a, .quickstart-next a {
+  color: var(--teal-dark);
+  font-weight: 700;
+}
+.quickstart-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.7rem;
+  background: #19374e;
+  color: white;
+  border-radius: 9px 9px 0 0;
+}
+.quickstart-toolbar button {
+  cursor: pointer;
+  background: #d9f2f3;
+  color: #123348;
+  border: 0;
+  border-radius: 5px;
+  padding: 0.5rem 0.8rem;
+  font-weight: 700;
+}
+.quickstart-toolbar [data-copy-status] { margin-left: 0.5rem; }
+.quickstart button:focus-visible, .quickstart a:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+}
+.quickstart-terminal {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+  padding: 1rem;
+  border-radius: 0 0 9px 9px;
+  background: var(--code-bg);
+  color: var(--code-ink);
+}
+.quickstart-terminal code {
+  font-size: 0.74rem;
+  line-height: 1.7;
+  user-select: text;
+}
+@media (max-width: 940px) {
+  .quickstart-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .quickstart { padding: 3rem 0; }
+  .quickstart-card { padding: 1rem; }
+  .quickstart-terminal code { font-size: 0.7rem; }
+}
+
 .thesis {
   padding: 6.5rem 0;
   background: var(--wash);

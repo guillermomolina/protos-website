@@ -1,10 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "repository": "guillermomolina/protos",
-  "version": "0.3.312",
-  "tag": "v0.3.312",
-  "releaseUrl": "https://github.com/guillermomolina/protos/releases/tag/v0.3.312",
-  "nativeAsset": "protos-0.3.312-native-linux-x86_64.zip",
-  "portableAsset": "protos-0.3.312-posix-jvm.zip",
-  "prerelease": true
+  "channel": "latest-published-prerelease"
 }
