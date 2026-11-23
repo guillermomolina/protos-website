@@ -11,12 +11,12 @@ This is an independent companion repository. Canonical Protos language,
 specification, guide, tutorial, example, and selected design sources remain in
 `guillermomolina/protos`.
 
-The website consumes an exact read-only Protos revision recorded in
-`protos-source.lock.json`.
+Live development documentation resolves the current Protos `main` branch
+and then uses one immutable commit for each document view. The website no
+longer builds canonical language documentation from Protos source.
 
-The selected revision is intentionally recorded only in
-`protos-source.lock.json` so documentation does not duplicate a stale mutable
-description of the current source input.
+The former Protos source lock remains for historical tooling only; active
+documentation no longer depends on that frozen revision.
 
 Syntax highlighting comes from the exact revision recorded in
 `protos-vscode-source.lock.json`. The website loads Protos' reusable
@@ -26,28 +26,21 @@ website-specific grammar.
 
 ## Local development
 
-J7B documentation generation uses the Protos-owned producer from the exact
-revision in `protos-source.lock.json`. Native development requires Node.js 22.12
-or newer plus **one** producer-toolchain path:
-
-- local JDK 21 + Maven 3.9 or newer; or
-- Docker, used only as a fallback to run the pinned Maven/JDK producer image.
+The website's active development/build pipeline is **Node.js only**. It does not
+compile Protos, run a D064 extractor, or require Java/Maven. Use the official
+Node.js devcontainer, or locally install Node.js 22.12+ (or newer), npm and Git:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Then open `http://localhost:4321`.
-
-The first run materializes the locked canonical Protos source subset into the
-ignored `.protos-source` cache, compiles the documentation producer from that
-same checkout, generates a revision-validated D064 JSON artifact, and renders
-the Standard Library API pages. If a suitable local JDK/Maven toolchain is not
-available, the same exact checkout is mounted read-write into the pinned
-Maven/JDK container solely for producer execution. The JSON artifact and
-generated pages are ephemeral derived build inputs, never maintained API
-authority.
+The site serves canonical development documentation from Protos `main` through
+NGINX's existing GitHub-backed endpoints. Each catalog and document is bound to
+one exact resolved commit; cache freshness/staleness is labeled. Locally, the
+Astro dev server builds the presentation, but the `/api/live/**` routes require
+the production NGINX+njs runtime for real data. The TextMate grammar is still
+consumed from the exact VS Code extension revision, entirely without Java.
 
 ## Docker Compose
 
@@ -57,20 +50,19 @@ docker compose up --build
 
 Then open `http://localhost:4321`.
 
-The Compose path uses the same npm scripts and source lock. Its Protos source
+The Compose path uses the same Node-only npm scripts. The VS Code grammar
 cache stays inside the container.
 
-## Update the canonical Protos input
+## Documentation sources
 
-Updating the source lock is explicit:
+The primary Learn and Reference navigation uses the live GitHub-backed reader
+at `/docs/live/`. No manual Protos version or SHA bump is needed when `main`
+changes. Historical static materializers and the former `protos-source.lock.json`
+are retained as inactive references; the normal npm pipeline never calls them.
 
-```sh
-npm run source:update
-npm run build
-```
-
-Review and commit the resulting `protos-source.lock.json` change. Ordinary
-builds never silently follow moving `protos/main`.
+D064 is consumed independently through `/api/live/docs/d064` from the existing
+GHCR-published OCI artifact with validated provenance. A publication is not
+claimed to match current `main` merely because it is the active D064 artifact.
 
 ## Production build
 

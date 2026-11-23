@@ -5,7 +5,6 @@ node_modules
 dist
 .protos-source
 .protos-source.*
-public/protos-branding
 npm-debug.log*
 src/content/docs/community/news
 src/generated/protos-news.json

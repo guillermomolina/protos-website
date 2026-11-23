@@ -1,18 +1,17 @@
 ---
 title: Reference
-description: Navigate the normative language specification and the current library surface.
+description: Browse the canonical language and Standard Library material.
 ---
 
 # Reference
 
-Reference material answers a different question from the learning material:
-**what behavior is defined, and where is that definition owned?**
+The specification is the authority for observable language behavior. Both
+specification files and the Standard Library source browser follow the current
+Protos `main` through the live, revision-coherent reader.
 
-- [Language reference](/reference/language/) — map the normative Core v0.1
-  specification and its ownership boundaries.
-- [Standard library](/reference/standard-library/) — navigate the library
-  families present in the source revision consumed by this website.
+- [Current language specification](/docs/live/?family=spec)
+- [Current Standard Library source](/docs/live/?family=library)
+- [Standard Library API publication](/reference/standard-library/) — D064 publication provenance and availability
 
-The Protos repository remains the authority for observable syntax and semantics.
-This website curates and navigates that material from an exact locked source
-revision; it does not independently redefine the language.
+The exact resolved commit is shown with every live document. The website
+provides presentation and navigation, not independent Protos semantics.

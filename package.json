@@ -7,9 +7,8 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "prepare:protos": "node scripts/prepare-protos.mjs && node scripts/prepare-vscode-grammar.mjs && node scripts/materialize-protos-browser-grammar.mjs",
-    "source:check": "node scripts/prepare-protos.mjs --check && node scripts/prepare-vscode-grammar.mjs --check",
-    "source:update": "node scripts/update-protos-source.mjs",
+    "prepare:protos": "node scripts/retire-protos-static.mjs && node scripts/prepare-vscode-grammar.mjs && node scripts/materialize-protos-browser-grammar.mjs",
+    "source:check": "node scripts/retire-protos-static.mjs --check && node scripts/prepare-vscode-grammar.mjs --check && node scripts/materialize-protos-browser-grammar.mjs --check",
     "predev": "npm run prepare:protos",
     "dev": "astro dev --host 0.0.0.0",
     "prebuild": "npm run prepare:protos",

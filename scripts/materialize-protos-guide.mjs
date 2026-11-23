@@ -10,10 +10,11 @@ import {
 import { dirname, join, posix } from 'node:path';
 
 const NUMBERED_GUIDE_RE = /^\d{2}-[a-z0-9-]+\.md$/;
-const GENERATED_OUTPUT_RE = /^(?:\d{2}-[a-z0-9-]+|source-style)\.md$/;
+const GENERATED_OUTPUT_RE = /^(?:\d{2}-[a-z0-9-]+|source-style|first-program)\.md$/;
 const SECTION_RE = /^[a-z0-9-]+$/;
 const SECTION_PAGE_RE = /^(?:README|[a-z0-9-]+)\.md$/;
 const SOURCE_STYLE = 'SOURCE_STYLE.md';
+const FIRST_PROGRAM = 'first-program.md';
 const TRY_PROTOS = '00-try-protos.md';
 
 // Guide pages are identified by their path relative to docs/guide: top-level
@@ -22,7 +23,8 @@ const TRY_PROTOS = '00-try-protos.md';
 function isGuidePage(relativePath) {
   const parts = relativePath.split('/');
   if (parts.length === 1) {
-    return NUMBERED_GUIDE_RE.test(parts[0]) || parts[0] === SOURCE_STYLE;
+    return NUMBERED_GUIDE_RE.test(parts[0]) ||
+      parts[0] === SOURCE_STYLE || parts[0] === FIRST_PROGRAM;
   }
   return (
     parts.length === 2 &&

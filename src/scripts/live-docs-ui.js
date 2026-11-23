@@ -147,6 +147,24 @@ export async function mountLiveDocs(doc, fetcher, browser) {
 
     const params = new URLSearchParams(browser.location.search);
     const keys = [...params.keys()];
+    if ((keys.length === 1 && keys[0] === 'family') ||
+        (keys.length === 2 &&
+         keys.includes('family') && keys.includes('filter'))) {
+      const selectedFamily = params.get('family');
+      const allowed = [
+        'all', 'spec', 'guide',
+        'tutorials', 'examples', 'library'
+      ];
+      if (allowed.includes(selectedFamily)) {
+        family.value = selectedFamily;
+        const requestedFilter = params.get('filter');
+        if (requestedFilter !== null &&
+            /^[a-z0-9-]{1,64}$/.test(requestedFilter)) {
+          filter.value = requestedFilter;
+        }
+        renderList();
+      }
+    }
     if (keys.length === 2 &&
         keys.includes('family') && keys.includes('path')) {
       const selected = catalog.entries.find(e =>

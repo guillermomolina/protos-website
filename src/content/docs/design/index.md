@@ -74,9 +74,7 @@ not as the default substrate for scale.
 
 ## Canonical design source
 
-The complete non-normative rationale, as currently maintained on the Protos
-`main` branch, is the
-[Protos Design Philosophy](https://github.com/guillermomolina/protos/blob/main/docs/design/PROTOS_DESIGN_PHILOSOPHY.md).
-
-For defined behavior rather than rationale, use the
-[Language reference](/reference/language/).
+The current project reference material includes the
+[Protos design philosophy](https://github.com/guillermomolina/protos/blob/main/AGENTS.work/REFERENCE.md).
+For current normative semantics, consult the
+[live specification from `main`](/docs/live/?family=spec).

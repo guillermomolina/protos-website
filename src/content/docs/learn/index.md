@@ -1,23 +1,20 @@
 ---
 title: Learn
-description: Learn Protos from first run to the language's core mental model.
+description: Follow the current programming guides, tutorials and examples.
 ---
 
 # Learn Protos
 
-Protos is easiest to learn as a small set of mechanisms that compose: objects,
-slots, delegation, execution contexts, closures, Futures, and Actors.
+Protos is built around objects, slots, delegation, closures, Futures and
+Actors. The primary documentation below is read directly from the current
+`guillermomolina/protos/main` through a revision-coherent GitHub reader.
 
-Choose the path that matches what you need:
+- [Try Protos](/docs/live/?family=guide&path=docs/guide/00-try-protos.md) — current installation and first-run instructions
+- [First program](/docs/live/?family=guide&path=docs/guide/first-program.md) — start programming
+- [Programming guide](/docs/live/?family=guide) — explanations of the language and library
+- [Tutorials](/docs/live/?family=tutorials) — executable lessons
+- [Examples](/docs/live/?family=examples) — executable code examples
 
-- [Getting started](/learn/getting-started/) — build the current reference
-  implementation, run a program, and open the REPL.
-- [Programming guide](/learn/guide/) — understand the mental model behind
-  bindings, delegation, closures, control flow, concurrency, and I/O.
-- [Tutorials](/learn/tutorials/) — follow small progressive executable programs.
-- [Examples](/learn/examples/) — find task-oriented cookbook programs.
-
-The website is a presentation layer, not a second language authority. Its
-language material is derived from the exact Protos source revision locked by
-`protos-source.lock.json`; the specification in the Protos repository remains
-normative.
+Every live document identifies the resolved commit used to serve it. The
+[specification](/docs/live/?family=spec) remains the normative source for
+observable language behavior.

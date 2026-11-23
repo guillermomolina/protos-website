@@ -1,27 +1,16 @@
 ---
 title: Examples
-description: Task-oriented executable Protos cookbook programs.
+description: Current executable examples from the Protos main branch.
 ---
 
 # Examples
 
-The canonical examples are a **task-oriented cookbook**: start with what you
-want to do, then inspect the smallest executable program that demonstrates it.
+The examples are executable Protos programs, not independent copies maintained
+by the website. They are browsable directly from the current `main` revision.
 
-Unlike the [Tutorials](/learn/tutorials/), this section is not a linear course.
-Its generated catalog follows the task mapping maintained by the exact Protos
-revision recorded in `protos-source.lock.json`.
+- [Browse all examples](/docs/live/?family=examples)
+- [Tutorials](/docs/live/?family=tutorials) for a progressive learning path
+- [Language specification](/docs/live/?family=spec) for normative semantics
 
-## Browse
-
-- [Task catalog](/learn/examples/catalog/) — every canonical cookbook task and
-  its executable `.protos` source.
-- [Tutorials](/learn/tutorials/) — use these instead when you want a progressive
-  learning path.
-- [Language reference](/reference/language/) — normative language authority.
-
-Each generated program page preserves the canonical source body and links back
-to the exact immutable Protos revision used to build this website.
-
-Examples are explanatory and non-normative. If an example conflicts with the
-applicable specification, the specification wins.
+Each displayed example includes its source path and exact resolved commit.
+New examples published to Protos `main` do not require a new website build.

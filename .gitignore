@@ -8,8 +8,7 @@
 /dist
 
 
-# Generated branding copied from the exact-SHA Protos source.
-/public/protos-branding
+# Website-owned branding assets are committed under public/protos-branding/.
 
 # Generated Programming Guide pages rendered from the exact-SHA Protos source.
 # The curated guide index stays tracked; canonical chapter/style copies do not.

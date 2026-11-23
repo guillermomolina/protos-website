@@ -15,7 +15,7 @@ const COVERAGE_FILE = '.protos-documentation.coverage.txt';
 const EXTRACTOR_CLASS =
   'com.guillermomolina.protos.documentation.ProtosStandardLibraryDocumentationExtractor';
 const PRODUCER_IMAGE =
-  'maven:3.9.16-eclipse-temurin-21@sha256:a972570be789ee5c9fa23446a8914ac7327560b5c022f662cfa9452aef829f18';
+  'maven:3.9.16-eclipse-temurin-25@sha256:93b8a14ea2f412782e4e842651273b4d903e35cc496284f178fbbe2d67d00976';
 
 function compareText(left, right) {
   if (left === right) return 0;
@@ -207,7 +207,7 @@ function commandAvailable(command, args = ['--version']) {
   return !result.error && result.status === 0;
 }
 
-function localJava21Available() {
+function localJava25Available() {
   const result = spawnSync('java', ['-version'], {
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
@@ -215,7 +215,7 @@ function localJava21Available() {
   if (result.error || result.status !== 0) return false;
   const output = `${result.stdout ?? ''}\n${result.stderr ?? ''}`;
   const match = output.match(/version\s+"(\d+)/);
-  return match !== null && Number(match[1]) >= 21;
+  return match !== null && Number(match[1]) >= 25;
 }
 
 function runLocalProducer(cache) {
@@ -257,7 +257,7 @@ function runLocalProducer(cache) {
 function runContainerProducer(cache) {
   if (!commandAvailable('docker', ['version'])) {
     throw new Error(
-      'The Protos documentation producer requires either local JDK 21 + Maven ' +
+      'The Protos documentation producer requires either local JDK 25 + Maven ' +
         'or Docker for the pinned Maven/JDK toolchain fallback.',
     );
   }
@@ -322,7 +322,7 @@ export function ensureProtosLibraryDocumentationArtifact({ cache, lock }) {
   rmSync(artifactPath(cache), { force: true });
   rmSync(coveragePath(cache), { force: true });
 
-  const useLocal = localJava21Available() && commandAvailable('mvn');
+  const useLocal = localJava25Available() && commandAvailable('mvn');
   console.log(
     `PROTOS_LIBRARY_API_PRODUCER_TOOLCHAIN: ${useLocal ? 'local-jdk-maven' : 'docker-fallback'}`,
   );

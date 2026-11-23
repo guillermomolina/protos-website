@@ -1,12 +1,10 @@
 {
   "schemaVersion": 1,
   "repository": "https://github.com/guillermomolina/protos.git",
-  "revision": "e99b712ecf658a527b1fe82c8beba2c1286d8dc9",
+  "revision": "9c56aba2c8b84a9c44440cb361db85b53fcf30b4",
   "canonicalPaths": [
     "README.md",
     "docs/guide",
-    "docs/design",
-    "docs/assets/branding",
     "spec",
     "protos/tutorials",
     "protos/examples",
