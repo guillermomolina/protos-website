@@ -1,6 +1,6 @@
 ---
 import '../styles/home.css';
-import { nativeFirstRun, portableFirstRun } from '../scripts/release-onboarding.js';
+import { nativeFirstRun } from '../scripts/release-onboarding.js';
 
 const brandLogo = '/protos-branding/protos-logo.png';
 
@@ -183,15 +183,16 @@ dog.<span class="syntax-call">speak</span>()</code></pre>
           <div class="quickstart-heading">
             <p class="eyebrow">Your first program</p>
             <h2 id="try-title">Try Protos.</h2>
-            <p>Copy the commands below to download the latest published
-               prerelease from GitHub, verify it and run your first program.</p>
-            <p>Requires curl, Python 3, unzip and sha256sum.</p>
+            <p>Use the official Protos installer to select, verify and install
+               a compatible published Native prerelease from GitHub.</p>
+            <p>Download the installer with curl; it checks its required system
+               tools and platform compatibility before installation.</p>
           </div>
           <div class="quickstart-grid">
             <article class="quickstart-card">
               <h3>Native Linux x86_64 — recommended</h3>
-              <p>No external JDK. Check the current release's glibc
-                 and CPU requirements. Guest JIT is unavailable.</p>
+              <p>No external JDK. The official installer checks the
+                 release's glibc and CPU requirements.</p>
               <p class="quickstart-links">
                 <a data-live-release="native-archive" href={releasesPage}>Download ZIP</a>
                 <a data-live-release="native-checksum" href={releasesPage}>SHA-256</a>
@@ -213,14 +214,11 @@ dog.<span class="syntax-call">speak</span>()</code></pre>
                 <a data-live-release="portable-archive" href={releasesPage}>Download ZIP</a>
                 <a data-live-release="portable-checksum" href={releasesPage}>SHA-256</a>
               </p>
-              <div class="quickstart-toolbar">
-                <span>Terminal</span>
-                <div>
-                  <button type="button" data-copy-onboarding="portable">Copy commands</button>
-                  <span data-copy-status role="status" aria-live="polite"></span>
-                </div>
-              </div>
-              <pre class="quickstart-terminal"><code data-first-run="portable">{portableFirstRun}</code></pre>
+              <p>The official <code>install.sh</code> installs Native,
+                 not Portable JVM. For this manual alternative, download the
+                 ZIP and its adjacent SHA-256 file from the same release using
+                 the links above. Verify the ZIP with <code>sha256sum -c</code>,
+                 then extract it with <code>unzip</code>.</p>
               <p>Set <code>JAVA_HOME</code> to your supported GraalVM/JDK, or select that runtime using <code>PROTOS_JAVA</code> or <code>PATH</code>. The launcher checks <code>RUNTIME.txt</code>.</p>
             </article>
           </div>

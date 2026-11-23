@@ -9,7 +9,6 @@ import {
 
 import {
   nativeFirstRun,
-  portableFirstRun,
   wireOnboardingCopy,
 } from '../src/scripts/release-onboarding.js';
 
@@ -61,10 +60,6 @@ function page() {
   nodes.set('[data-first-run="native"]', {
     textContent: nativeFirstRun,
   });
-  nodes.set('[data-first-run="portable"]', {
-    textContent: portableFirstRun,
-  });
-
   return {
     nodes,
     querySelector(selector) {
@@ -76,7 +71,7 @@ function page() {
   };
 }
 
-test('homepage exposes all release links and first-run commands', () => {
+test('homepage exposes release links and official Native installer', () => {
   const html = readFileSync('src/pages/index.astro', 'utf8');
 
   for (const key of releaseKeys) {
@@ -88,9 +83,9 @@ test('homepage exposes all release links and first-run commands', () => {
 
   assert.match(html, /Try Protos/);
   assert.match(html, /data-first-run="native"/);
-  assert.match(html, /data-first-run="portable"/);
   assert.match(html, /data-copy-onboarding="native"/);
-  assert.match(html, /data-copy-onboarding="portable"/);
+  assert.doesNotMatch(html, /data-first-run="portable"/);
+  assert.doesNotMatch(html, /data-copy-onboarding="portable"/);
   assert.match(html, /refreshLiveRelease\(document, fetch\)/);
   assert.match(html, /wireOnboardingCopy\(document\)/);
 
@@ -98,21 +93,19 @@ test('homepage exposes all release links and first-run commands', () => {
   assert.doesNotMatch(html, /v0\.3\.\d+/);
 });
 
-test('versionless commands discover the current GitHub prerelease', () => {
-  for (const commands of [nativeFirstRun, portableFirstRun]) {
-    assert.match(commands, /api\.github\.com\/repos\/guillermomolina\/protos\/releases/);
-    assert.match(commands, /curl -fsSL/);
-    assert.match(commands, /prerelease/);
-    assert.match(commands, /sha256sum -c/);
-    assert.match(commands, /unzip/);
-    assert.match(commands, /bin\/protos --version/);
-    assert.match(commands, /Hello, Protos!/);
-    assert.doesNotMatch(commands, /v0\.3\.\d+/);
-  }
-
-  assert.match(nativeFirstRun, /native-linux-x86_64/);
-  assert.match(portableFirstRun, /posix-jvm/);
-  assert.match(portableFirstRun, /JAVA_HOME/);
+test('Native first run uses the canonical install.sh, not a second downloader', () => {
+  assert.match(
+    nativeFirstRun,
+    /raw\.githubusercontent\.com\/guillermomolina\/protos\/main\/dist\/install\.sh/,
+  );
+  assert.match(nativeFirstRun, /curl -fsSLo protos-install\.sh/);
+  assert.match(nativeFirstRun, /sh protos-install\.sh/);
+  assert.match(nativeFirstRun, /\.local\/bin\/protos" --version/);
+  assert.match(nativeFirstRun, /Hello, Protos!/);
+  assert.doesNotMatch(
+    nativeFirstRun,
+    /api\.github\.com|python3|releases\/download|sha256sum|unzip/,
+  );
 });
 
 test('valid GitHub release updates all four asset links', () => {
@@ -263,7 +256,7 @@ test('HTTP failure retains versionless release links', async () => {
   );
 });
 
-test('network failure retains versionless shell commands', async () => {
+test('network failure retains the official Native installer', async () => {
   const document = page();
 
   assert.equal(
@@ -274,8 +267,8 @@ test('network failure retains versionless shell commands', async () => {
   );
 
   assert.equal(
-    document.querySelector('[data-first-run="portable"]').textContent,
-    portableFirstRun,
+    document.querySelector('[data-first-run="native"]').textContent,
+    nativeFirstRun,
   );
 });
 
