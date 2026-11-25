@@ -35,6 +35,8 @@ const principles = [
 ];
 
 const canonicalRepository = 'https://github.com/guillermomolina/protos';
+const redditCommunity = 'https://www.reddit.com/r/Protos/';
+const xProfile = 'https://x.com/ProtosLang';
 const releasesPage = `${canonicalRepository}/releases`;
 const canonicalSite = 'https://protos.guillermomolina.com/';
 const socialImage = 'https://protos.guillermomolina.com/icon-512x512.png';
@@ -375,7 +377,11 @@ dog.<span class="syntax-call">speak</span>()</code></pre>
           Protos is experimental. The canonical specification and project
           sources live in the Protos repository.
         </p>
-        <a href={canonicalRepository}>GitHub</a>
+        <nav class="footer-social-links" aria-label="Protos community links">
+          <a href={canonicalRepository}>GitHub</a>
+          <a href={redditCommunity} aria-label="Reddit — r/Protos">Reddit</a>
+          <a href={xProfile} aria-label="X — @ProtosLang">X</a>
+        </nav>
       </div>
     </footer>
     <script>

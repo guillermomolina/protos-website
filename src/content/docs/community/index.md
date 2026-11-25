@@ -19,6 +19,19 @@ The homepage displays recent announcements dynamically from that source, without
 maintaining a versioned Markdown archive in the website. GitHub Discussions is
 the canonical news archive and the place to read or react to announcements.
 
+## Join the community
+
+Join [r/Protos on Reddit](https://www.reddit.com/r/Protos/) to discuss
+the language, ask questions, share examples and experiments, and follow
+project announcements.
+
+Follow [@ProtosLang on X](https://x.com/ProtosLang) for release
+announcements, development updates, and technical highlights.
+
+GitHub Discussions remains the canonical project discussion and
+announcement surface, and GitHub Issues remains the home of actionable
+project work.
+
 ## Make your first contribution
 
 If you are new to Protos, start with the pinned newcomer Discussion:
@@ -94,3 +107,5 @@ answer.
 - [Discussions](https://github.com/guillermomolina/protos/discussions)
 - [Issues](https://github.com/guillermomolina/protos/issues)
 - [Development project](https://github.com/users/guillermomolina/projects/1)
+- [Reddit — r/Protos](https://www.reddit.com/r/Protos/)
+- [X — @ProtosLang](https://x.com/ProtosLang)

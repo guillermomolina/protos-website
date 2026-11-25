@@ -5,6 +5,9 @@ Official website implementation for the
 
 The intended public domain is `https://protos.guillermomolina.com`.
 
+[![Reddit: r/Protos](https://img.shields.io/badge/Reddit-r%2FProtos-FF4500?logo=reddit&logoColor=white)](https://www.reddit.com/r/Protos/)
+[![X: @ProtosLang](https://img.shields.io/badge/X-%40ProtosLang-000000?logo=x&logoColor=white)](https://x.com/ProtosLang)
+
 ## Architecture
 
 This is an independent companion repository. Canonical Protos language,

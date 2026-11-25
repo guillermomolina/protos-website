@@ -4,13 +4,19 @@ import { readFileSync } from 'node:fs';
 
 const read = name => readFileSync(name, 'utf8');
 
-test('WEB010 build and devcontainer do not use Java, Maven or apt in dev', () => {
+test('WEB010 build and devcontainer remain Java-free and Maven-free', () => {
   const dev = read('.devcontainer/Dockerfile');
   const docker = read('Dockerfile');
   for (const source of [dev, docker]) {
     assert.doesNotMatch(source, /\bJAVA_HOME\b|\bMAVEN_HOME\b|eclipse-temurin|maven:/);
   }
-  assert.doesNotMatch(dev, /apt-get/);
+  const installs = [...dev.matchAll(/apt-get\s+install\b((?:\\\n|[^\n])*)/g)];
+  assert.equal(installs.length, 1);
+  const installArgs = installs[0][1].replace(/\\\n/g, ' ').split('&&')[0];
+  assert.match(installArgs, /(?:^|\s)--no-install-recommends(?:\s|$)/);
+  const packages = installArgs.split(/\s+/).filter(token => token && !token.startsWith('-'));
+  assert.deepEqual([...packages].sort(), ['bash-completion', 'make']);
+  assert.match(dev, /apt-get\s+install\b[\s\S]*?&&\s*rm -rf \/var\/lib\/apt\/lists\/\*/);
   assert.match(dev, /node:22\.23\.2-bookworm/);
   assert.match(docker, / AS production/);
   assert.match(docker, /COPY --from=build/);

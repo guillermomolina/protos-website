@@ -572,6 +572,22 @@ footer {
   text-decoration: none;
 }
 
+.footer-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-social-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-social-links a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
 @media (max-width: 940px) {
   .primary-nav {
     gap: 1rem;

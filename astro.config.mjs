@@ -152,6 +152,16 @@ export default defineConfig({
           label: 'GitHub',
           href: 'https://github.com/guillermomolina/protos',
         },
+        {
+          icon: 'reddit',
+          label: 'Reddit — r/Protos',
+          href: 'https://www.reddit.com/r/Protos/',
+        },
+        {
+          icon: 'x.com',
+          label: 'X — @ProtosLang',
+          href: 'https://x.com/ProtosLang',
+        },
       ],
       sidebar: [
         {
