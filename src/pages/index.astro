@@ -38,8 +38,8 @@ const canonicalRepository = 'https://github.com/guillermomolina/protos';
 const redditCommunity = 'https://www.reddit.com/r/Protos/';
 const xProfile = 'https://x.com/ProtosLang';
 const releasesPage = `${canonicalRepository}/releases`;
-const canonicalSite = 'https://protos.guillermomolina.com/';
-const socialImage = 'https://protos.guillermomolina.com/icon-512x512.png';
+const canonicalSite = new URL('/', Astro.site);
+const socialImage = new URL('/icon-512x512.png', Astro.site);
 const socialDescription =
   'Protos is an experimental prototype-based programming language built from a small set of composable mechanisms.';
 ---
@@ -90,7 +90,7 @@ const socialDescription =
       defer
       src="https://stats.guillermomolina.com/script.js"
       data-website-id="16bfc4d7-f72e-488e-b153-3466acf8d1c3"
-      data-domains="protos.guillermomolina.com"
+      data-domains="www.protoslang.com"
     ></script>
     <title>Protos — Experimental prototype-based programming language</title>
   </head>

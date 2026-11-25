@@ -90,7 +90,7 @@ const ebnfShikiGrammar = {
 };
 
 export default defineConfig({
-  site: 'https://protos.guillermomolina.com',
+  site: 'https://www.protoslang.com',
   integrations: [
     starlight({
       title: 'Protos',
@@ -109,7 +109,7 @@ export default defineConfig({
             defer: true,
             src: 'https://stats.guillermomolina.com/script.js',
             'data-website-id': '16bfc4d7-f72e-488e-b153-3466acf8d1c3',
-            'data-domains': 'protos.guillermomolina.com',
+            'data-domains': 'www.protoslang.com',
           },
         },
         {
